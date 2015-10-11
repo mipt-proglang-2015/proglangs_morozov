@@ -1,0 +1,13 @@
+#login_name{
+	text-align:right;
+	margin-right:30px;
+
+}
+
+.table_rows{
+	width:20px;
+	height:20px;
+	border:1px solid;
+	text-align:center;
+	font-size:18px;
+}
