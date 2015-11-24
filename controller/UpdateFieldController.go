@@ -38,19 +38,16 @@ func drawTable(enemy string, isTurn bool,fld_wrap *model.Field ) string {
 	if (!isTurn){
 		turn_string = "Your opposite`s turn"
 	}
-	result:= "<div>Your enemy:"+enemy+"</div><div id='which_turn'>"+turn_string+"</div><div id='won_cond'></div><div onclick=\"quit()\"><a href=\"#\">Quit</a></div><table><tbody>";
+	result:= "<div>Your enemy:"+enemy+"</div><div id='which_turn'>"+turn_string+"</div><div id='won_cond'></div><div id='quit_button'><a href=\"#\">Quit</a></div><table><tbody>";
 
 	for i:=0;i<model.FIELD_SIZE;i++{
 		result+="<tr>"
 		for j:=0;j<model.FIELD_SIZE;j++{
 			k := strconv.Itoa(i)
 			l := strconv.Itoa(j)
-			onclick_f := ""
-			if (isTurn){
-				onclick_f = CELL_ONCLICK
-			}
+
 			if (field[i][j]<1){
-				result += "<td onclick= '"+onclick_f+"' class='table_rows active-rows' id='"+k+"x"+l+"'></td>"
+				result += "<td class='table_rows active-rows' id='"+k+"x"+l+"'></td>"
 			} else {
 				if (field[i][j]==1){
 					result += "<td  class='table_rows' id='"+k+"x"+l+"'>O</td>"

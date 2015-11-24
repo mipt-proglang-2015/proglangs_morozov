@@ -1,7 +1,13 @@
 #login_name{
 	text-align:right;
 	margin-right:30px;
+	font-size:20px;
+	color:white;
+}
 
+#logout a{
+color:white;
+font-size:20px;
 }
 
 .table_rows{
@@ -10,4 +16,32 @@
 	border:1px solid;
 	text-align:center;
 	font-size:18px;
+}
+
+#registr{
+max-width:330px;
+text-align:center;
+margin:0 auto;
+padding:15px;
+
+}
+
+#play{
+	margin:0 auto;
+
+	max-width:330px;
+}
+
+.play_message{
+    margin: 0 auto;
+    height: 100px;
+    max-width: 350px;
+    border: 1px solid black;
+}
+
+.confirm_buttons{
+	margin:0 auto;
+	width:100px;
+	display:flex;
+
 }

@@ -9,10 +9,11 @@ import (
 const PLAYERS_TEMPLATE = "view/playerlist.tpl"
 
 func ClientHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
+	w.Header().Set("Access-Control-Request-Method", "POST")
 	playerList := model.GetPlayerList()
 	clientName := r.PostFormValue("name")
 	SetCookie(w,CLIENT_COOKIE,clientName)
-
 	client := &model.Player{clientName,nil,true,false,false,nil,""}
 	playerList.PushFront(*client)
 
@@ -21,6 +22,7 @@ func ClientHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ConfirmHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
 	enemyName := r.PostFormValue("enemy")
 
 	SetCookie(w,OPPOSITE_COOKIE, enemyName)
@@ -28,6 +30,7 @@ func ConfirmHandler(w http.ResponseWriter, r *http.Request) {
 
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
 	playerList := model.GetPlayerList()
 	clientName := DeleteCookie(w,r,CLIENT_COOKIE)
 
@@ -37,6 +40,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdatePlayersHandler(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
 	playerList := model.GetPlayerList()
 	clientName := GetCookie(r,CLIENT_COOKIE)
 	type Page1 struct{

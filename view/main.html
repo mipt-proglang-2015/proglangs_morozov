@@ -1,37 +1,112 @@
 <html>
 <head>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="/cookie.js"></script>
-<script src="/script.js"></script>
-<link rel="stylesheet" href="/style.css" />
+
+	<script type="text/javascript" src="/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/bootstrap.min.js"></script>
+	<script type="application/dart" src="script.dart"></script>
+	<script src="/packages/browser/dart.js"></script>
+	<link rel="stylesheet" href="/bootstrap.css">
+	<link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
-<table><tr>
-<td id="login_name"> </td><td id="logout"><a href='/logout'>logout</a></td></tr></table>
-<h1>Hello! </h1>
-<div id="registr">
-<form action="/newClient" method="POST" id="newClientForm">
-<div>Name: <input type="text" name="name" id="clientNameField"></div>
-<div><input type="submit" value="Save"></div>
-</form>
-</div>
 
-<div id="play">
-	<ul id="active_players">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Cross-Zeros</a>
+		</div>
 
-</ul>
-</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<form class="navbar-form navbar-right this-navbar">
 
-<div id="play_dialog">
 
-</div>
-<div id="field" style="display:none;">
+			<div class="form-group dropdown">
+				<div></div>
 
-</div>
-<div id="field2" style="display:none;">
+			</div>
 
-</div>
+
+
+			<div>
+				<div  class="form-group">
+					<div id="login_name" >
+
+
+					</div>
+				</div>
+				<div  class="form-group">
+					<div id="logout"><a href='/logout'>logout</a></div>
+
+				</div>
+
+			</div>
+
+
+			</form>
+		</div>
+	</div>
+</nav>
+<hr>
+
+
+
+	<div class="container">
+
+		<div id="registr" align="center">
+			<form action="/newClient" method="POST" id="newClientForm" class="form-signin">
+				<h2 class="form-signin-heading">Enter nickname</h2>
+				<div>
+					<label for="clientNameField" class="sr-only">Name:</label>
+					<input type="text" name="name" id="clientNameField" class="form-control" placeholder="Name...">
+				</div>
+				<div>
+					<input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
+				</div>
+			</form>
+		</div>
+
+		<script type="text/javascript">
+		$(document).ready(function(){
+		 $(".players_free").each(function(i){
+			$(this).click(function(){
+				var clName  =  $.cookie("clientName");
+				var content = $(this).find("a").html();
+				console.log(content)
+				socket.send(content+"%"+clName+":clientToApprove")
+
+			})
+
+
+		 })
+
+
+
+		})
+
+		</script>
+		<div id="play">
+			<h2>Players online</h2>
+			<div id="active_players"></div>
+		</table>
+		</div>
+
+		<div id="play_dialog">
+
+		</div>
+		<div id="field" style="display:none;">
+
+		</div>
+		<div id="field2" style="display:none;">
+
+		</div>
+	</div>
 </body>
 </html>

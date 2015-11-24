@@ -14,6 +14,7 @@ import (
 
 const STATIC_DIR = "./view/static"
 const PORT = ":8090"
+const HTTPS_PORT=":10443"
 
 func main() {
 
@@ -29,10 +30,14 @@ func main() {
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir(STATIC_DIR)))
 
 	fmt.Println(playerList.Len())
-	
+	//generate_cert()
 	http.Handle("/",r)	
 	fmt.Println("Open localhost:8090 to see webpage")
 	http.ListenAndServe(PORT,nil)
+	//err :=http.ListenAndServeTLS(HTTPS_PORT, "cert.pem", "key.pem", nil)
+	//if err != nil {
+	//	fmt.Println("ListenAndServe: ", err)
+	//}
 }
 
 

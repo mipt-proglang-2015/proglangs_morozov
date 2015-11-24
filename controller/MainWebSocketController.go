@@ -38,10 +38,12 @@ var upgrader = websocket.Upgrader{
 }
 
 func ServeWs(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method != "GET" {
 		http.Error(w, "Method not allowed", 405)
 		return
 	}
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)

@@ -10,7 +10,7 @@ import (
 const MAIN_TEMPLATE = "view/main.html"
 
 func MainHandler(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
 	playerList := model.GetPlayerList()
 	fmt.Println("Hello!"+strconv.Itoa(playerList.Len()))
 

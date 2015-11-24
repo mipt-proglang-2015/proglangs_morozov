@@ -1,26 +1,16 @@
 {{define "T"}}
-<script type="text/javascript">
-    $(document).ready(function(){
-     $(".players_free").each(function(i){
-        $(this).click(function(){
-            var clName  =  $.cookie("clientName");
-            var content = $(this).find("a").html();
-            console.log(content)
-            socket.send(content+"%"+clName+":clientToApprove")
 
-        })
-
-
-     })
-
+<table class="table table-striped table-hover table-bordered">
+    <thead><th>Player nickname</th></thead>
+    <tbody>
+    {{range .List}}
+        <tr><td class='players  {{if ne $.Val .Name | and .IsFree }}players_free' >
+        <a href='#'>{{.Name}}</a>
+        {{else}}'>{{.Name}}{{end}}</td>
+        </tr>
+    {{end}}
+    </tbody>
+</table>
 
 
-    })
-
-</script>
-{{range .List}}
-<li class='players  {{if ne $.Val .Name | and .IsFree }}players_free' >
-    <a href='#'>{{.Name}}</a>
-    {{else}}'>{{.Name}}{{end}}</li>
-{{end}}
 {{end}}

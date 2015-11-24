@@ -66,7 +66,7 @@ func GetResultInCell(playerName string) int{
 
 func GetIndices(value string) (int,int){
 	n := strings.Index(value, "x")
-	i,_ :=strconv.Atoi(value[:n])
+	i,_ :=strconv.Atoi(value[1:n])
 	j,_ := strconv.Atoi(value[n+1:])
 	return i,j
 
