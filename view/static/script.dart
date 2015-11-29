@@ -1,6 +1,3 @@
-// Copyright 2015 the Dart project authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license
-// that can be found in the LICENSE file.
 
 import 'dart:html';
 import 'dart:core';
@@ -14,14 +11,13 @@ bool isCross=true;
 String cross='X';
 String zero='O';
 void main() {
-  //createCookie('clientName','Ihor',1);
-	//querySelector("#login_name").innerHtml = readCookie('clientName');
   
   querySelector("#newClientForm").onSubmit.listen(register);
   querySelector("#logout").onClick.listen(logout);
-  //print(readCookie('clientName'));
+
   getClientName();
 	getEnemyName();
+	print(readCookie("clientName"));
   
 }
 
@@ -35,7 +31,6 @@ void register(Event e){
   
   var data = { 'name' : name };
   print(url);
-  //url = 'https://93.175.9.66:10443'+url;
 	print(url);
   HttpRequest.postFormData(url, data).then((HttpRequest request) {
     
@@ -86,7 +81,6 @@ void eraseCookie(String name) {
 			querySelector("#play").setAttribute("style","");
 			querySelector("#login_name").innerHtml = clName;
 			querySelector("#logout").setAttribute("style","");
-			//upd_interval = setInterval("updPlayers()",2000);
 			timer = new Timer.periodic(const Duration(seconds: 2), 								updatePlayers);
 			print(timer.isActive);
       socket=openSocket();
@@ -101,10 +95,18 @@ void eraseCookie(String name) {
 
 	void getEnemyName(){
 		String enemyName =readCookie("enemyName");
-		if (enemyName!=null){
+		print(readCookie("gjName"));
+		print(enemyName);
+		if (enemyName!=null && enemyName!="" ){
 			querySelector("#play").style.display="none";
 			querySelector("#field").setAttribute("style","");
+			print('upd+enemyName');
 			updateTable();
+		}
+		else{
+			querySelector("#field").style.display="none";
+			querySelector("#play").setAttribute("style","");
+			print('no null');
 		}
 	}
 
@@ -112,8 +114,7 @@ void eraseCookie(String name) {
 		event.preventDefault();
     AnchorElement el = event.target as AnchorElement;	
 		print(el.innerHtml);
-    String url = el.getAttribute('href');		
-		//url = 'https://93.175.9.66:10443'+url;
+    String url = el.getAttribute('href');
 		
   	HttpRequest.getString(url).then((String resp) {
   		getClientName();
@@ -126,7 +127,6 @@ void eraseCookie(String name) {
     
 void updatePlayers(Timer timer) { 
   String url = "/updatePlayers";
-  //url = 'https://93.175.9.66:10443'+url; 
   void setClickable(){
     querySelectorAll(".players_free").forEach((playerButton){
       void requestToPlay(Event e){
@@ -151,7 +151,7 @@ WebSocket openSocket(){
 	WebSocket socket = new WebSocket("ws://localhost:8090/ws");
 	socket.onOpen.listen ((e) {
 	  String enemyName =readCookie("enemyName");
-	  if (enemyName!=null){
+	  if (enemyName!=null && enemyName!=""){
 		  socket.send(":CheckVal");
 	  }
 	  print("Соединение установлено.");
@@ -276,9 +276,6 @@ WebSocket openSocket(){
           row.classes.remove("active-rows");
           isTurn=!isTurn;
           querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
-					//var listener = listeners[id_val];
-					//print(listener.cancel());
-					//print(listeners.remove(id_val));
 					listeners.forEach((numb,listener)=>listener.cancel());
 					listeners = new Map<String,StreamSubscription>();
 
@@ -317,9 +314,13 @@ WebSocket openSocket(){
 
 		if(msg.split(":")[0]=="EnemyQuit"){
 			querySelector("#won_cond").innerHtml="Your opponent left this game";
-      listeners.forEach((numb,listener)=>listener.cancel());
+			print('Quitted');
+			listeners.forEach((numb,listener)=>listener.cancel());
       listeners = new Map<String,StreamSubscription>();
 			eraseCookie('enemyName');
+
+			socket=openSocket();
+			print('new socket should be opened');
 		}
 	});
 	return socket;
@@ -340,8 +341,14 @@ void displayResult(msg){
 
 void quit(Event e){
 	String enemyName =readCookie("enemyName");
-	eraseCookie('enemyName');
-	socket.send(enemyName+":QuitGame");
+	if (enemyName!=null && enemyName!="") {
+
+		eraseCookie('enemyName');
+		print(readCookie('enemyName'));
+		socket.send(enemyName + ":QuitGame");
+
+		socket = openSocket();
+	}
 	querySelector("#field").innerHtml="";
 	querySelector("#play").setAttribute("style",'');
 }
@@ -349,7 +356,7 @@ void quit(Event e){
 
 void updateTable(){
 	String url = "/getTable";
-  	//url = 'https://93.175.9.66:10443'+url;
+
 	HttpRequest.getString(url).then((String resp) {
     	querySelector("#field").setAttribute('style','');
 			querySelector("#field").innerHtml = resp;

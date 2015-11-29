@@ -9357,17 +9357,28 @@
   }], ["", "script.dart",, N, {
     "^": "",
     main: [function() {
-      var t1 = J.get$onSubmit$x(document.querySelector("#newClientForm"));
+      var t1, enemyName;
+      t1 = J.get$onSubmit$x(document.querySelector("#newClientForm"));
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.script__register$closure()), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = J.get$onClick$x(document.querySelector("#logout"));
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.script__logout$closure()), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       N.getClientName();
-      if (N.readCookie("enemyName") != null) {
+      enemyName = N.readCookie("enemyName");
+      P.print(N.readCookie("gjName"));
+      P.print(enemyName);
+      if (enemyName != null && enemyName !== "") {
         t1 = document.querySelector("#play").style;
         t1.display = "none";
         document.querySelector("#field").setAttribute("style", "");
+        P.print("upd+enemyName");
         N.updateTable();
+      } else {
+        t1 = document.querySelector("#field").style;
+        t1.display = "none";
+        document.querySelector("#play").setAttribute("style", "");
+        P.print("no null");
       }
+      P.print(N.readCookie("clientName"));
     }, "call$0", "script__main$closure", 0, 0, 2],
     register: [function(e) {
       var form, url, $name, data;
@@ -9430,15 +9441,17 @@
       W.HttpRequest_getString("/updatePlayers", null, null).then$1(new N.updatePlayers_closure(new N.updatePlayers_setClickable()));
     }, "call$1", "script__updatePlayers$closure", 2, 0, 22],
     openSocket: function() {
-      var socket, t1;
+      var t1, socket, t2;
+      t1 = {};
       socket = W.WebSocket_WebSocket("ws://localhost:8090/ws", null);
-      t1 = H.setRuntimeTypeInfo(new W._EventStream(socket, "open", false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.openSocket_closure(socket)), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-      t1 = H.setRuntimeTypeInfo(new W._EventStream(socket, "close", false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.openSocket_closure0()), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-      t1 = H.setRuntimeTypeInfo(new W._EventStream(socket, "message", false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new N.openSocket_closure1(socket)), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-      return socket;
+      t1._captured_socket_0 = socket;
+      t2 = H.setRuntimeTypeInfo(new W._EventStream(socket, "open", false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.openSocket_closure(t1)), false), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t2 = H.setRuntimeTypeInfo(new W._EventStream(t1._captured_socket_0, "close", false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.openSocket_closure0()), false), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t2 = H.setRuntimeTypeInfo(new W._EventStream(t1._captured_socket_0, "message", false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new N.openSocket_closure1(t1)), false), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      return t1._captured_socket_0;
     },
     displayResult: function(msg) {
       var t1, field_vals, k, i_j, i, j;
@@ -9465,11 +9478,15 @@
     quit: [function(e) {
       var enemyName, t1;
       enemyName = N.readCookie("enemyName");
-      N.createCookie("enemyName", "", null);
-      t1 = $.socket;
-      if (enemyName == null)
-        return enemyName.$add();
-      t1.send(enemyName + ":QuitGame");
+      if (enemyName != null && enemyName !== "") {
+        N.createCookie("enemyName", "", null);
+        P.print(N.readCookie("enemyName"));
+        t1 = $.socket;
+        if (enemyName == null)
+          return enemyName.$add();
+        t1.send(enemyName + ":QuitGame");
+        $.socket = N.openSocket();
+      }
       J.set$innerHtml$x(document.querySelector("#field"), "");
       document.querySelector("#play").setAttribute("style", "");
     }, "call$1", "script__quit$closure", 2, 0, 4],
@@ -9531,10 +9548,11 @@
       }
     },
     openSocket_closure: {
-      "^": "Closure:1;_captured_socket_0",
+      "^": "Closure:1;_script$_box_0",
       call$1: function(e) {
-        if (N.readCookie("enemyName") != null)
-          this._captured_socket_0.send(":CheckVal");
+        var enemyName = N.readCookie("enemyName");
+        if (enemyName != null && enemyName !== "")
+          this._script$_box_0._captured_socket_0.send(":CheckVal");
         P.print("\u0421\u043e\u0435\u0434\u0438\u043d\u0435\u043d\u0438\u0435 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u043e.");
       }
     },
@@ -9549,7 +9567,7 @@
       }
     },
     openSocket_closure1: {
-      "^": "Closure:1;_captured_socket_1",
+      "^": "Closure:1;_script$_box_0",
       call$1: function($event) {
         var t1, msg, enemy, turn, id_val, value;
         t1 = J.getInterceptor$x($event);
@@ -9564,7 +9582,7 @@
             return H.ioore(t1, 1);
           enemy = t1[1];
           J.set$innerHtml$x(document.querySelector("#play_dialog"), C.JSString_methods.$add("<div class='play_message'><div style='margin:10px;text-align:center'>user <b>", enemy) + "</b> wants to play against you</div><div class='confirm_buttons'><input type='button' class='btn btn-primary confirm_inputs' value='submit'><input type='button' class='cancel_inputs' style='margin-left:5px' class='btn' value='cancel'></div></div>");
-          H.setRuntimeTypeInfo(new W._ElementListEventStreamImpl(new W._FrozenElementList(document.querySelectorAll(".confirm_inputs")), false, "click"), [null]).listen$1(new N.openSocket__closure(this._captured_socket_1, enemy));
+          H.setRuntimeTypeInfo(new W._ElementListEventStreamImpl(new W._FrozenElementList(document.querySelectorAll(".confirm_inputs")), false, "click"), [null]).listen$1(new N.openSocket__closure(this._script$_box_0, enemy));
           H.setRuntimeTypeInfo(new W._ElementListEventStreamImpl(new W._FrozenElementList(document.querySelectorAll(".cancel_inputs")), false, "click"), [null]).listen$1(new N.openSocket__closure0());
         }
         t1 = msg.split(":");
@@ -9576,7 +9594,7 @@
             return H.ioore(t1, 1);
           enemy = t1[1];
           document.querySelector("#field").setAttribute("style", "");
-          this._captured_socket_1.send(":CheckVal");
+          this._script$_box_0._captured_socket_0.send(":CheckVal");
           N.createCookie("enemyName", enemy, 1);
         }
         t1 = msg.split(":");
@@ -9605,7 +9623,7 @@
           P.print("very important:=" + String($.isTurn));
           if ($.isTurn) {
             t1 = new W._FrozenElementList(document.querySelectorAll(".active-rows"));
-            t1.forEach$1(t1, new N.openSocket__closure1(new N.openSocket__madestep(this._captured_socket_1)));
+            t1.forEach$1(t1, new N.openSocket__closure1(new N.openSocket__madestep(this._script$_box_0)));
           }
           t1 = document.querySelector("#which_turn");
           J.set$innerHtml$x(t1, $.isTurn ? "Your turn" : "Your opposite`s turn");
@@ -9623,7 +9641,7 @@
           t1 = C.JSString_methods.$add("#", id_val);
           J.set$innerHtml$x(document.querySelector(t1), value);
           t1 = new W._FrozenElementList(document.querySelectorAll(".active-rows"));
-          t1.forEach$1(t1, new N.openSocket__closure2(this._captured_socket_1));
+          t1.forEach$1(t1, new N.openSocket__closure2(this._script$_box_0));
           t1 = C.JSString_methods.$add("#", id_val);
           J.get$classes$x(document.querySelector(t1)).remove$1(0, "active-rows");
           $.isTurn = !$.isTurn;
@@ -9655,9 +9673,12 @@
           return H.ioore(t1, 0);
         if (J.$eq$(t1[0], "EnemyQuit")) {
           J.set$innerHtml$x(document.querySelector("#won_cond"), "Your opponent left this game");
+          P.print("Quitted");
           $.$get$listeners().forEach$1(0, new N.openSocket__closure5());
           $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
           N.createCookie("enemyName", "", null);
+          this._script$_box_0._captured_socket_0 = N.openSocket();
+          P.print("new socket should be opened");
         }
       }
     },
@@ -9678,23 +9699,23 @@
       }
     },
     openSocket__closure: {
-      "^": "Closure:12;_captured_socket_2,_captured_enemy_3",
+      "^": "Closure:12;_script$_box_0,_captured_enemy_1",
       call$1: function(e) {
-        var t1 = this._captured_enemy_3;
-        W.HttpRequest_postFormData("/confirm", P.LinkedHashMap__makeLiteral([t1, t1]), null, null, null, null).then$1(new N.openSocket___closure1(this._captured_socket_2, t1));
+        var t1 = this._captured_enemy_1;
+        W.HttpRequest_postFormData("/confirm", P.LinkedHashMap__makeLiteral([t1, t1]), null, null, null, null).then$1(new N.openSocket___closure1(this._script$_box_0, t1));
       }
     },
     openSocket___closure1: {
-      "^": "Closure:6;_captured_socket_4,_captured_enemy_5",
+      "^": "Closure:6;_script$_box_0,_captured_enemy_2",
       call$1: function(request) {
         var t1, t2;
-        t1 = this._captured_socket_4;
-        t2 = this._captured_enemy_5;
-        t1.send(J.$add$ns(t2, ":Accepted"));
+        t1 = this._script$_box_0;
+        t2 = this._captured_enemy_2;
+        t1._captured_socket_0.send(J.$add$ns(t2, ":Accepted"));
         document.querySelector("#field").setAttribute("style", "");
         N.createCookie("enemyName", t2, 1);
         J.set$innerHtml$x(document.querySelector("#play_dialog"), "");
-        t1.send(":CheckVal");
+        t1._captured_socket_0.send(":CheckVal");
       }
     },
     openSocket__closure0: {
@@ -9704,9 +9725,9 @@
       }
     },
     openSocket__madestep: {
-      "^": "Closure:4;_captured_socket_6",
+      "^": "Closure:4;_script$_box_0",
       call$1: function(e) {
-        var el, t1;
+        var el, t1, t2;
         el = H.interceptedTypeCast(J.get$target$x(e), "$isHtmlElement");
         t1 = J.getInterceptor$x(el);
         if ($.isCross)
@@ -9719,10 +9740,11 @@
         J.set$innerHtml$x(t1, $.isTurn ? "Your Turn" : "Opposite's turn");
         $.$get$listeners().forEach$1(0, new N.openSocket__madestep_closure());
         $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
-        t1 = el.id;
-        if (t1 == null)
-          return t1.$add();
-        this._captured_socket_6.send(t1 + ":MadeStep");
+        t1 = this._script$_box_0._captured_socket_0;
+        t2 = el.id;
+        if (t2 == null)
+          return t2.$add();
+        t1.send(t2 + ":MadeStep");
       }
     },
     openSocket__madestep_closure: {
@@ -9732,32 +9754,32 @@
       }
     },
     openSocket__closure1: {
-      "^": "Closure:1;_captured_madestep_7",
+      "^": "Closure:1;_captured_madestep_3",
       call$1: function(cell) {
         var t1, $onclick;
         P.print(cell);
         t1 = J.getInterceptor$x(cell);
         $onclick = t1.get$onClick(cell);
-        $.$get$listeners().putIfAbsent$2(t1.get$id(cell), new N.openSocket___closure0(this._captured_madestep_7, $onclick));
+        $.$get$listeners().putIfAbsent$2(t1.get$id(cell), new N.openSocket___closure0(this._captured_madestep_3, $onclick));
       }
     },
     openSocket___closure0: {
-      "^": "Closure:0;_captured_madestep_8,_captured_onclick_9",
+      "^": "Closure:0;_captured_madestep_4,_captured_onclick_5",
       call$0: function() {
-        return this._captured_onclick_9.listen$1(this._captured_madestep_8);
+        return this._captured_onclick_5.listen$1(this._captured_madestep_4);
       }
     },
     openSocket__closure2: {
-      "^": "Closure:1;_captured_socket_10",
+      "^": "Closure:1;_script$_box_0",
       call$1: function(row) {
-        $.$get$listeners().putIfAbsent$2(J.get$id$x(row), new N.openSocket___closure(row, new N.openSocket___drawCellInnerElement(this._captured_socket_10, row)));
+        $.$get$listeners().putIfAbsent$2(J.get$id$x(row), new N.openSocket___closure(row, new N.openSocket___drawCellInnerElement(this._script$_box_0, row)));
       }
     },
     openSocket___drawCellInnerElement: {
-      "^": "Closure:4;_captured_socket_11,_captured_row_12",
+      "^": "Closure:4;_script$_box_0,_captured_row_6",
       call$1: function(e) {
         var t1, t2, t3;
-        t1 = this._captured_row_12;
+        t1 = this._captured_row_6;
         t2 = $.isCross ? $.cross : $.zero;
         t3 = J.getInterceptor$x(t1);
         t3.set$innerHtml(t1, t2);
@@ -9767,10 +9789,11 @@
         J.set$innerHtml$x(t3, $.isTurn ? "Your Turn" : "Opposite's turn");
         $.$get$listeners().forEach$1(0, new N.openSocket___drawCellInnerElement_closure());
         $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
+        t2 = this._script$_box_0._captured_socket_0;
         t1 = t1.id;
         if (t1 == null)
           return t1.$add();
-        this._captured_socket_11.send(t1 + ":MadeStep");
+        t2.send(t1 + ":MadeStep");
       }
     },
     openSocket___drawCellInnerElement_closure: {
@@ -9780,9 +9803,9 @@
       }
     },
     openSocket___closure: {
-      "^": "Closure:0;_captured_row_13,_captured_drawCellInnerElement_14",
+      "^": "Closure:0;_captured_row_7,_captured_drawCellInnerElement_8",
       call$0: function() {
-        return J.get$onClick$x(this._captured_row_13).listen$1(this._captured_drawCellInnerElement_14);
+        return J.get$onClick$x(this._captured_row_7).listen$1(this._captured_drawCellInnerElement_8);
       }
     },
     openSocket__closure3: {
