@@ -10,6 +10,7 @@ bool isTurn=false;
 bool isCross=true;
 String cross='X';
 String zero='O';
+bool isUpdated = false;
 void main() {
   
   querySelector("#newClientForm").onSubmit.listen(register);
@@ -101,7 +102,7 @@ void eraseCookie(String name) {
 			querySelector("#play").style.display="none";
 			querySelector("#field").setAttribute("style","");
 			print('upd+enemyName');
-			updateTable();
+			updateTable(false,"");
 		}
 		else{
 			querySelector("#field").style.display="none";
@@ -222,8 +223,9 @@ WebSocket openSocket(){
 			querySelector("#field").setAttribute("style","");
 			socket.send(":CheckVal");
 			createCookie('enemyName', enemy,1);
-			
 		}
+
+
 		if (msg.split(":")[0]=="IsCross"){
 			String side_part = msg.split(";")[0];
 			String cross = side_part.split(":")[1];
@@ -232,21 +234,12 @@ WebSocket openSocket(){
 			String turn_part = msg.split(";")[1];
 			String turn = turn_part.split(":")[1];
 			print("turn="+turn);
-			isTurn = (turn == 'true');		querySelector("#field").innerHtml=generateTable(readCookie('enemyName'));
+			isTurn = (turn == 'true');
+				updateTable(0,"");
+				/*	querySelector("#field").innerHtml=generateTable(readCookie('enemyName'));
       querySelector("#quit_button").onClick.listen(quit);
       void madestep (Event e){
 					HtmlElement el = (e.target as HtmlElement);
-          if (isCross){
-						el.innerHtml="X";
-					}
-					else{
-						el.innerHtml="O";
-					}
-					el.classes.remove("active-rows");
-          isTurn=!isTurn;
-          querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
-        	listeners.forEach((numb,listener)=>listener.cancel());
-        	listeners = new Map<String,StreamSubscription>();
           socket.send(el.id+":MadeStep");
 
 				}
@@ -260,15 +253,15 @@ WebSocket openSocket(){
       }
         );
       }
-			querySelector("#which_turn").innerHtml=(isTurn)? "Your turn":"Your opposite`s turn";
+			querySelector("#which_turn").innerHtml=(isTurn)? "Your turn":"Your opposite`s turn";*/
 
 		}
 		if (msg.split(":")[0]=="MadeStep"){
 
-			var id_val = msg.split(":")[1];
+			//var id_val = msg.split(":")[1];
 			var value = (isCross)?"O":"X";
 			print(value);
-			querySelector("#"+id_val).innerHtml = value;
+			/*querySelector("#"+id_val).innerHtml = value;
 
 			querySelectorAll('.active-rows').forEach((row){
         void drawCellInnerElement(Event e){
@@ -288,28 +281,34 @@ WebSocket openSocket(){
       );
       
           querySelector("#"+id_val).classes.remove("active-rows");
-          isTurn=!isTurn;
+         isTurn=!isTurn;
           querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
 
 					var listener = listeners[id_val];
 					print(listener.cancel());
 					print(listeners.remove(id_val));
-
+*/
+			isTurn=!isTurn;
+			updateTable(0,"");
 		}
 
 		if(msg.split(":")[0]=="YouWon"){
 			displayResult(msg);
-			querySelector("#won_cond").innerHtml="You won!";
+			isTurn=false;
+
       listeners.forEach((numb,listener)=>listener.cancel());
       listeners = new Map<String,StreamSubscription>();
-
+			updateTable(2,msg);
 		}
 
 		if(msg.split(":")[0]=="YouLose"){
 			displayResult(msg);
-			querySelector("#won_cond").innerHtml="You lose";
-      listeners.forEach((numb,listener)=>listener.cancel());
+			isTurn=false;
+
+
+			listeners.forEach((numb,listener)=>listener.cancel());
       listeners = new Map<String,StreamSubscription>();
+			updateTable(1,msg);
 		}
 
 		if(msg.split(":")[0]=="EnemyQuit"){
@@ -321,6 +320,14 @@ WebSocket openSocket(){
 
 			socket=openSocket();
 			print('new socket should be opened');
+		}
+		if(msg.split(":")[0]=="StepDone"){
+
+			isTurn=!isTurn;
+			querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
+			listeners.forEach((numb,listener)=>listener.cancel());
+			listeners = new Map<String,StreamSubscription>();
+			updateTable(0,"");
 		}
 	});
 	return socket;
@@ -354,38 +361,46 @@ void quit(Event e){
 }
 
 
-void updateTable(){
+void updateTable(int is_end,String msg){
 	String url = "/getTable";
 
 	HttpRequest.getString(url).then((String resp) {
     	querySelector("#field").setAttribute('style','');
 			querySelector("#field").innerHtml = resp;
     	querySelector("#quit_button").onClick.listen(quit);
-      void madestep (Event e){
-				HtmlElement el = (e.target as HtmlElement);
-          if (isCross){
-						el.innerHtml="X";
-					}
-					else{
-						el.innerHtml="O";
-					}
-					el.classes.remove("active-rows");
-          isTurn=!isTurn;
-          querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
-        	listeners.forEach((numb,listener)=>listener.cancel());
-        	listeners = new Map<String,StreamSubscription>();
-          socket.send(el.id+":MadeStep");
 
-				}
-      print("another dot:"+isTurn.toString());
+
+			print("His turn:"+isTurn.toString());
 			if (isTurn){
       querySelectorAll(".active-rows").forEach((cell){
-				print(cell);
-				ElementStream onclick = cell.onClick;
-        listeners.putIfAbsent(cell.id,()=>onclick.listen(madestep));
+
+				void drawCellInnerElement(Event e){
+					//cell.innerHtml=(isCross)?cross:zero;
+					//cell.classes.remove("active-rows");
+					//isTurn=!isTurn;
+					//querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
+					listeners.forEach((numb,listener)=>listener.cancel());
+					listeners = new Map<String,StreamSubscription>();
+
+
+					socket.send(cell.id+":MadeStep");
+				}
+				listeners.putIfAbsent(cell.id,()=>cell.onClick.listen(drawCellInnerElement));
 				});
 		}
+			if(is_end==0) {
+				querySelector("#which_turn").innerHtml = (isTurn) ? "Your turn" : "Your opposite`s turn";
+			}
+			else{
+				querySelector("#which_turn").innerHtml = "Game was ended";
+				displayResult(msg);
+				if (is_end==2){
+					querySelector("#won_cond").innerHtml="You won!";
+				} else{
+					querySelector("#won_cond").innerHtml="You lose";
+				}
 
+			}
 });
 }
   

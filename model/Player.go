@@ -107,6 +107,28 @@ func SetPlayerFieldValue(playerName string,i int,j int,value int){
 	thisPlayer.Value = thisPlayerEnt
 }
 
+func ResizePlayerField(playerName string,i int ,j int ){
+	thisPlayer := FindPlayer(&playerList, playerName)
+	thisPlayerEnt :=  thisPlayer.Value.(Player)
+
+	field := thisPlayerEnt.Field
+	if(i==0) {
+		ResizeField(field,0,-1)
+	}
+	if(j==0) {
+		ResizeField(field,-1,0)
+	}
+	if (i==field.Height-1){
+		ResizeField(field,0,1)
+	}
+	if (j==field.Width-1){
+		ResizeField(field,1,0)
+	}
+	WIDTH = field.Width
+	HEIGHT = field.Height
+	thisPlayer.Value = thisPlayerEnt
+}
+
 
 
 

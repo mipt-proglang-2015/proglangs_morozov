@@ -78,11 +78,14 @@ func madeStep(client string,value string){
 	fmt.Println(isVictory)
 	fmt.Println(q.ToString())
 	//fmt.Println(client+" now turn:"+strconv.FormatBool(findPlayer(playerList,client).Value.(Player).isHisTurn))
+	model.ResizePlayerField(client,i,j)
 
-	sendMessage(enemy,"MadeStep:"+value)
 	if (isVictory){
 		sendMessage(client,"YouWon:"+q.ToString())
 		sendMessage(enemy,"YouLose:"+q.ToString())
+	} else {
+		sendMessage(client,"StepDone:");
+		sendMessage(enemy,"MadeStep:"+value)
 	}
 }
 

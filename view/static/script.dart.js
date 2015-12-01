@@ -560,7 +560,7 @@
       toString$0: ["super$Interceptor$toString", function(receiver) {
         return H.Primitives_objectToHumanReadableString(receiver);
       }],
-      "%": "Blob|DOMError|DOMImplementation|File|FileError|MediaError|MediaKeyError|NavigatorUserMediaError|PositionError|Range|SQLError|SVGAnimatedLength|SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedString"
+      "%": "Blob|DOMError|DOMImplementation|File|FileError|MediaError|MediaKeyError|NavigatorUserMediaError|PositionError|Range|SQLError|SVGAnimatedNumberList|SVGAnimatedString"
     },
     JSBool: {
       "^": "Interceptor;",
@@ -802,8 +802,6 @@
         return receiver + other;
       },
       $sub: function(receiver, other) {
-        if (typeof other !== "number")
-          throw H.wrapException(H.argumentErrorValue(other));
         return receiver - other;
       },
       $mul: function(receiver, other) {
@@ -1629,11 +1627,11 @@
       }
     },
     _NativeJsSendPort_send_closure: {
-      "^": "Closure:0;_captured_this_0,_captured_msg_1",
+      "^": "Closure:0;_captured_this_0,__isolate_helper$_captured_msg_1",
       call$0: function() {
         var t1 = this._captured_this_0._receivePort;
         if (!t1.get$_isClosed())
-          t1.__isolate_helper$_add$1(this._captured_msg_1);
+          t1.__isolate_helper$_add$1(this.__isolate_helper$_captured_msg_1);
       }
     },
     _WorkerSendPort: {
@@ -2212,9 +2210,6 @@
     checkInt: function(value) {
       if (typeof value !== "number" || Math.floor(value) !== value)
         throw H.wrapException(H.argumentErrorValue(value));
-      return value;
-    },
-    checkString: function(value) {
       return value;
     },
     wrapException: function(ex) {
@@ -3654,29 +3649,6 @@
       call$1: function(tag) {
         return this._captured_prototypeForTag_2(tag);
       }
-    },
-    JSSyntaxRegExp: {
-      "^": "Object;pattern,_nativeRegExp,_nativeGlobalRegExp,_nativeAnchoredRegExp",
-      toString$0: function(_) {
-        return "RegExp/" + this.pattern + "/";
-      },
-      static: {JSSyntaxRegExp_makeNative: function(source, multiLine, caseSensitive, global) {
-          var m, i, g, regexp;
-          H.checkString(source);
-          m = multiLine ? "m" : "";
-          i = caseSensitive ? "" : "i";
-          g = global ? "g" : "";
-          regexp = function() {
-            try {
-              return new RegExp(source, m + i + g);
-            } catch (e) {
-              return e;
-            }
-          }();
-          if (regexp instanceof RegExp)
-            return regexp;
-          throw H.wrapException(new P.FormatException("Illegal RegExp pattern (" + String(regexp) + ")", source, null));
-        }}
     }
   }], ["dart._internal", "dart:_internal",, H, {
     "^": "",
@@ -4195,22 +4167,22 @@
       P._scheduleAsyncCallback(new P._AsyncCallbackEntry(f, zone, null));
     },
     _AsyncRun__initializeScheduleImmediate_internalCallback: {
-      "^": "Closure:1;_async$_box_0",
+      "^": "Closure:1;_box_0",
       call$1: function(_) {
         var t1, f;
         --init.globalState.topEventLoop._activeJsAsyncCount;
-        t1 = this._async$_box_0;
+        t1 = this._box_0;
         f = t1._captured_storedCallback_0;
         t1._captured_storedCallback_0 = null;
         f.call$0();
       }
     },
     _AsyncRun__initializeScheduleImmediate_closure: {
-      "^": "Closure:15;_async$_box_0,_captured_div_1,_captured_span_2",
+      "^": "Closure:15;_box_0,_captured_div_1,_captured_span_2",
       call$1: function(callback) {
         var t1, t2;
         ++init.globalState.topEventLoop._activeJsAsyncCount;
-        this._async$_box_0._captured_storedCallback_0 = callback;
+        this._box_0._captured_storedCallback_0 = callback;
         t1 = this._captured_div_1;
         t2 = this._captured_span_2;
         t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
@@ -4234,7 +4206,7 @@
       "^": "_ControllerStream;_async$_controller"
     },
     _BroadcastSubscription: {
-      "^": "_ControllerSubscription;_eventState,_async$_next@,_async$_previous?,_async$_controller,_async$_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+      "^": "_ControllerSubscription;_eventState,_async$_next@,_async$_previous?,_async$_controller,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
       get$_async$_controller: function() {
         return this._async$_controller;
       },
@@ -4931,10 +4903,10 @@
       }
     },
     _Future__propagateToListeners_handleWhenCompleteCallback_closure0: {
-      "^": "Closure:10;_async$_box_0,_captured_result_12",
+      "^": "Closure:10;_box_0,_captured_result_12",
       call$2: function(error, stackTrace) {
         var t1, completeResult;
-        t1 = this._async$_box_0;
+        t1 = this._box_0;
         if (!(t1._captured_completeResult_0 instanceof P._Future)) {
           completeResult = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
           t1._captured_completeResult_0 = completeResult;
@@ -4982,9 +4954,9 @@
       }
     },
     Stream_forEach_closure: {
-      "^": "Closure;_async$_box_0,_async$_captured_this_1,_captured_action_2,_captured_future_3",
+      "^": "Closure;_box_0,_async$_captured_this_1,_captured_action_2,_captured_future_3",
       call$1: function(element) {
-        P._runUserCode(new P.Stream_forEach__closure(this._captured_action_2, element), new P.Stream_forEach__closure0(), P._cancelAndErrorClosure(this._async$_box_0._captured_subscription_0, this._captured_future_3));
+        P._runUserCode(new P.Stream_forEach__closure(this._captured_action_2, element), new P.Stream_forEach__closure0(), P._cancelAndErrorClosure(this._box_0._captured_subscription_0, this._captured_future_3));
       },
       $signature: function() {
         return H.computeSignature(function(T) {
@@ -5010,15 +4982,15 @@
       }
     },
     Stream_length_closure: {
-      "^": "Closure:1;_async$_box_0",
+      "^": "Closure:1;_box_0",
       call$1: function(_) {
-        ++this._async$_box_0._captured_count_0;
+        ++this._box_0._captured_count_0;
       }
     },
     Stream_length_closure0: {
-      "^": "Closure:0;_async$_box_0,_captured_future_1",
+      "^": "Closure:0;_box_0,_captured_future_1",
       call$0: function() {
-        this._captured_future_1._complete$1(this._async$_box_0._captured_count_0);
+        this._captured_future_1._complete$1(this._box_0._captured_count_0);
       }
     },
     Stream_toList_closure: {
@@ -5075,7 +5047,7 @@
       "^": "Object;"
     },
     _BufferingStreamSubscription: {
-      "^": "Object;_async$_onData,_onError,_onDone,_zone<,_state?,_cancelFuture,_pending",
+      "^": "Object;_onData,_onError,_onDone,_zone<,_state?,_cancelFuture,_pending",
       pause$1: function(_, resumeSignal) {
         var t1 = this._state;
         if ((t1 & 8) !== 0)
@@ -5185,7 +5157,7 @@
       _sendData$1: function(data) {
         var t1 = this._state;
         this._state = (t1 | 32) >>> 0;
-        this._zone.runUnaryGuarded$2(this._async$_onData, data);
+        this._zone.runUnaryGuarded$2(this._onData, data);
         this._state = (this._state & 4294967263) >>> 0;
         this._checkState$1((t1 & 4) !== 0);
       },
@@ -5268,7 +5240,7 @@
       _BufferingStreamSubscription$4: function(onData, onError, onDone, cancelOnError, $T) {
         var t1 = this._zone;
         t1.toString;
-        this._async$_onData = onData;
+        this._onData = onData;
         this._onError = P._registerErrorHandler(onError == null ? P.async___nullErrorHandler$closure() : onError, t1);
         this._onDone = onDone == null ? P.async___nullDoneHandler$closure() : onDone;
       },
@@ -5479,7 +5451,7 @@
       }
     },
     _ForwardingStreamSubscription: {
-      "^": "_BufferingStreamSubscription;_stream,_subscription,_async$_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+      "^": "_BufferingStreamSubscription;_stream,_subscription,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
       _async$_add$1: function(data) {
         if ((this._state & 2) !== 0)
           return;
@@ -5574,10 +5546,10 @@
       "^": "Object;"
     },
     _rootHandleUncaughtError_closure: {
-      "^": "Closure:0;_async$_box_0,_captured_stackTrace_1",
+      "^": "Closure:0;_box_0,_captured_stackTrace_1",
       call$0: function() {
         var t1, t2, error;
-        t1 = this._async$_box_0;
+        t1 = this._box_0;
         t2 = t1._captured_error_0;
         if (t2 == null) {
           error = new P.NullThrownError();
@@ -5935,14 +5907,14 @@
         index = this._findBucketIndex$2(bucket, object);
         if (index < 0)
           return;
-        return J.$index$asx(bucket, index).get$_collection$_element();
+        return J.$index$asx(bucket, index).get$_element();
       },
       forEach$1: function(_, action) {
         var cell, modifications;
         cell = this._collection$_first;
         modifications = this._collection$_modifications;
         for (; cell != null;) {
-          action.call$1(cell._collection$_element);
+          action.call$1(cell._element);
           if (modifications !== this._collection$_modifications)
             throw H.wrapException(new P.ConcurrentModificationError(this));
           cell = cell._collection$_next;
@@ -6079,7 +6051,7 @@
           return -1;
         $length = bucket.length;
         for (i = 0; i < $length; ++i)
-          if (J.$eq$(bucket[i].get$_collection$_element(), element))
+          if (J.$eq$(bucket[i].get$_element(), element))
             return i;
         return -1;
       },
@@ -6092,7 +6064,7 @@
         }}
     },
     LinkedHashSetCell: {
-      "^": "Object;_collection$_element<,_collection$_next,_collection$_previous<"
+      "^": "Object;_element<,_collection$_next,_collection$_previous<"
     },
     LinkedHashSetIterator: {
       "^": "Object;_set,_collection$_modifications,_collection$_cell,_collection$_current",
@@ -6109,7 +6081,7 @@
             this._collection$_current = null;
             return false;
           } else {
-            this._collection$_current = t1._collection$_element;
+            this._collection$_current = t1._element;
             this._collection$_cell = t1._collection$_next;
             return true;
           }
@@ -6184,10 +6156,10 @@
       $isEfficientLength: 1
     },
     Maps_mapToString_closure: {
-      "^": "Closure:3;_box_0,_captured_result_1",
+      "^": "Closure:3;_collection$_box_0,_captured_result_1",
       call$2: function(k, v) {
         var t1, t2;
-        t1 = this._box_0;
+        t1 = this._collection$_box_0;
         if (!t1._captured_first_0)
           this._captured_result_1._contents += ", ";
         t1._captured_first_0 = false;
@@ -6334,26 +6306,6 @@
         var t1;
         for (t1 = this.get$iterator(this); t1.moveNext$0();)
           f.call$1(t1._collection$_current);
-      },
-      join$1: function(_, separator) {
-        var iterator, buffer, t1;
-        iterator = this.get$iterator(this);
-        if (!iterator.moveNext$0())
-          return "";
-        buffer = new P.StringBuffer("");
-        if (separator === "") {
-          do
-            buffer._contents += H.S(iterator._collection$_current);
-          while (iterator.moveNext$0());
-        } else {
-          buffer._contents = H.S(iterator._collection$_current);
-          for (; iterator.moveNext$0();) {
-            buffer._contents += separator;
-            buffer._contents += H.S(iterator._collection$_current);
-          }
-        }
-        t1 = buffer._contents;
-        return t1.charCodeAt(0) == 0 ? t1 : t1;
       },
       $isEfficientLength: 1
     },
@@ -6866,17 +6818,6 @@
         return "Exception: " + H.S(t1);
       }
     },
-    FormatException: {
-      "^": "Object;message,source,offset",
-      toString$0: function(_) {
-        var report, source;
-        report = "" !== this.message ? "FormatException: " + this.message : "FormatException";
-        source = this.source;
-        if (source.length > 78)
-          source = C.JSString_methods.substring$2(source, 0, 75) + "...";
-        return report + "\n" + source;
-      }
-    },
     Expando: {
       "^": "Object;name",
       toString$0: function(_) {
@@ -7099,16 +7040,6 @@
     WebSocket_WebSocket: function(url, protocol_OR_protocols) {
       return new WebSocket(url);
     },
-    _JenkinsSmiHash_combine: function(hash, value) {
-      hash = 536870911 & hash + value;
-      hash = 536870911 & hash + ((524287 & hash) << 10 >>> 0);
-      return hash ^ hash >>> 6;
-    },
-    _JenkinsSmiHash_finish: function(hash) {
-      hash = 536870911 & hash + ((67108863 & hash) << 3 >>> 0);
-      hash ^= hash >>> 11;
-      return 536870911 & hash + ((16383 & hash) << 15 >>> 0);
-    },
     _convertNativeToDart_EventTarget: function(e) {
       var $window;
       if (e == null)
@@ -7136,7 +7067,7 @@
       "%": "HTMLAppletElement|HTMLBRElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMenuItemElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLOptGroupElement|HTMLOptionElement|HTMLParagraphElement|HTMLPictureElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|PluginPlaceholderElement;HTMLElement"
     },
     AnchorElement: {
-      "^": "HtmlElement;target=,hostname=,href},port=,protocol=",
+      "^": "HtmlElement;hostname=,href},port=,protocol=",
       toString$0: function(receiver) {
         return String(receiver);
       },
@@ -7145,7 +7076,7 @@
       "%": "HTMLAnchorElement"
     },
     AreaElement: {
-      "^": "HtmlElement;target=,hostname=,href},port=,protocol=",
+      "^": "HtmlElement;hostname=,href},port=,protocol=",
       toString$0: function(receiver) {
         return String(receiver);
       },
@@ -7153,7 +7084,7 @@
       "%": "HTMLAreaElement"
     },
     BaseElement: {
-      "^": "HtmlElement;href},target=",
+      "^": "HtmlElement;href}",
       "%": "HTMLBaseElement"
     },
     BodyElement: {
@@ -7170,7 +7101,7 @@
     CharacterData: {
       "^": "Node;data=,length=",
       $isInterceptor: 1,
-      "%": "CDATASection|Comment|Text;CharacterData"
+      "%": "CDATASection|CharacterData|Comment|ProcessingInstruction|Text"
     },
     CloseEvent: {
       "^": "Event;wasClean=",
@@ -7223,12 +7154,6 @@
         t1.append$1(e, this.clone$1(receiver, true));
         return t1.get$innerHtml(e);
       },
-      set$innerHtml: function(receiver, value) {
-        var t1;
-        this._clearChildren$0(receiver);
-        t1 = document.body;
-        receiver.appendChild((t1 && C.BodyElement_methods).createFragment$3$treeSanitizer$validator(t1, value, null, null));
-      },
       querySelector$1: function(receiver, selectors) {
         return receiver.querySelector(selectors);
       },
@@ -7242,56 +7167,8 @@
       },
       "%": "DOMException"
     },
-    DomRectReadOnly: {
-      "^": "Interceptor;height=,left=,top=,width=",
-      toString$0: function(receiver) {
-        return "Rectangle (" + H.S(receiver.left) + ", " + H.S(receiver.top) + ") " + H.S(this.get$width(receiver)) + " x " + H.S(this.get$height(receiver));
-      },
-      $eq: function(receiver, other) {
-        var t1, t2, t3;
-        if (other == null)
-          return false;
-        t1 = J.getInterceptor(other);
-        if (!t1.$isRectangle)
-          return false;
-        t2 = receiver.left;
-        t3 = t1.get$left(other);
-        if (t2 == null ? t3 == null : t2 === t3) {
-          t2 = receiver.top;
-          t3 = t1.get$top(other);
-          if (t2 == null ? t3 == null : t2 === t3) {
-            t2 = this.get$width(receiver);
-            t3 = t1.get$width(other);
-            if (t2 == null ? t3 == null : t2 === t3) {
-              t2 = this.get$height(receiver);
-              t1 = t1.get$height(other);
-              t1 = t2 == null ? t1 == null : t2 === t1;
-            } else
-              t1 = false;
-          } else
-            t1 = false;
-        } else
-          t1 = false;
-        return t1;
-      },
-      get$hashCode: function(receiver) {
-        var t1, t2, t3, t4;
-        t1 = J.get$hashCode$(receiver.left);
-        t2 = J.get$hashCode$(receiver.top);
-        t3 = J.get$hashCode$(this.get$width(receiver));
-        t4 = J.get$hashCode$(this.get$height(receiver));
-        return W._JenkinsSmiHash_finish(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(0, t1), t2), t3), t4));
-      },
-      $isRectangle: 1,
-      $asRectangle: Isolate.functionThatReturnsNull,
-      "%": ";DOMRectReadOnly"
-    },
-    DomTokenList: {
-      "^": "Interceptor;length=",
-      "%": "DOMSettableTokenList|DOMTokenList"
-    },
     _ChildrenElementList: {
-      "^": "ListBase;_element<,_childElements",
+      "^": "ListBase;_html$_element<,_childElements",
       get$length: function(_) {
         return this._childElements.length;
       },
@@ -7305,7 +7182,7 @@
         var t1 = this._childElements;
         if (index >>> 0 !== index || index >= t1.length)
           return H.ioore(t1, index);
-        this._element.replaceChild(value, t1[index]);
+        this._html$_element.replaceChild(value, t1[index]);
       },
       set$length: function(_, newLength) {
         throw H.wrapException(new P.UnsupportedError("Cannot resize element lists"));
@@ -7316,7 +7193,7 @@
       },
       addAll$1: function(_, iterable) {
         var t1, t2;
-        for (t1 = J.get$iterator$ax(iterable instanceof W._ChildNodeListLazy ? P.List_List$from(iterable, true, null) : iterable), t2 = this._element; t1.moveNext$0();)
+        for (t1 = J.get$iterator$ax(iterable instanceof W._ChildNodeListLazy ? P.List_List$from(iterable, true, null) : iterable), t2 = this._html$_element; t1.moveNext$0();)
           t2.appendChild(t1.get$current());
       },
       $asListBase: function() {
@@ -7358,9 +7235,6 @@
       },
       get$children: function(receiver) {
         return new W._ChildrenElementList(receiver, receiver.children);
-      },
-      get$classes: function(receiver) {
-        return new W._ElementCssClassSet(receiver);
       },
       toString$0: function(receiver) {
         return receiver.localName;
@@ -7467,9 +7341,6 @@
     },
     Event: {
       "^": "Interceptor;",
-      get$target: function(receiver) {
-        return W._convertNativeToDart_EventTarget(receiver.target);
-      },
       preventDefault$0: function(receiver) {
         return receiver.preventDefault();
       },
@@ -7501,7 +7372,7 @@
       "%": "HTMLFieldSetElement"
     },
     FormElement: {
-      "^": "HtmlElement;length=,name=,target=",
+      "^": "HtmlElement;length=,name=",
       $isFormElement: 1,
       "%": "HTMLFormElement"
     },
@@ -7776,11 +7647,6 @@
         }
         return receiver;
       },
-      _clearChildren$0: function(receiver) {
-        var t1;
-        for (; t1 = receiver.firstChild, t1 != null;)
-          receiver.removeChild(t1);
-      },
       toString$0: function(receiver) {
         var value = receiver.nodeValue;
         return value == null ? this.super$Interceptor$toString(receiver) : value;
@@ -7856,10 +7722,6 @@
       "^": "HtmlElement;name=",
       "%": "HTMLParamElement"
     },
-    ProcessingInstruction: {
-      "^": "CharacterData;target=",
-      "%": "ProcessingInstruction"
-    },
     PushEvent: {
       "^": "Event;data=",
       "%": "PushEvent"
@@ -7869,7 +7731,7 @@
       "%": "HTMLSelectElement"
     },
     ShadowRoot: {
-      "^": "DocumentFragment;innerHtml:innerHTML%",
+      "^": "DocumentFragment;innerHtml:innerHTML=",
       clone$1: function(receiver, deep) {
         return receiver.cloneNode(true);
       },
@@ -7978,64 +7840,10 @@
       "^": "Node;name=",
       "%": "Attr"
     },
-    _ClientRect: {
-      "^": "Interceptor;height=,left=,top=,width=",
-      toString$0: function(receiver) {
-        return "Rectangle (" + H.S(receiver.left) + ", " + H.S(receiver.top) + ") " + H.S(receiver.width) + " x " + H.S(receiver.height);
-      },
-      $eq: function(receiver, other) {
-        var t1, t2, t3;
-        if (other == null)
-          return false;
-        t1 = J.getInterceptor(other);
-        if (!t1.$isRectangle)
-          return false;
-        t2 = receiver.left;
-        t3 = t1.get$left(other);
-        if (t2 == null ? t3 == null : t2 === t3) {
-          t2 = receiver.top;
-          t3 = t1.get$top(other);
-          if (t2 == null ? t3 == null : t2 === t3) {
-            t2 = receiver.width;
-            t3 = t1.get$width(other);
-            if (t2 == null ? t3 == null : t2 === t3) {
-              t2 = receiver.height;
-              t1 = t1.get$height(other);
-              t1 = t2 == null ? t1 == null : t2 === t1;
-            } else
-              t1 = false;
-          } else
-            t1 = false;
-        } else
-          t1 = false;
-        return t1;
-      },
-      get$hashCode: function(receiver) {
-        var t1, t2, t3, t4;
-        t1 = J.get$hashCode$(receiver.left);
-        t2 = J.get$hashCode$(receiver.top);
-        t3 = J.get$hashCode$(receiver.width);
-        t4 = J.get$hashCode$(receiver.height);
-        return W._JenkinsSmiHash_finish(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(0, t1), t2), t3), t4));
-      },
-      $isRectangle: 1,
-      $asRectangle: Isolate.functionThatReturnsNull,
-      "%": "ClientRect"
-    },
     _DocumentType: {
       "^": "Node;",
       $isInterceptor: 1,
       "%": "DocumentType"
-    },
-    _DomRect: {
-      "^": "DomRectReadOnly;",
-      get$height: function(receiver) {
-        return receiver.height;
-      },
-      get$width: function(receiver) {
-        return receiver.width;
-      },
-      "%": "DOMRect"
     },
     _HTMLFrameSetElement: {
       "^": "HtmlElement;",
@@ -8090,7 +7898,7 @@
       $isEfficientLength: 1
     },
     _AttributeMap: {
-      "^": "Object;_element<",
+      "^": "Object;_html$_element<",
       forEach$1: function(_, f) {
         var t1, t2, _i, key;
         for (t1 = this.get$keys(), t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, H.throwConcurrentModificationError)(t1), ++_i) {
@@ -8100,7 +7908,7 @@
       },
       get$keys: function() {
         var attributes, keys, len, i;
-        attributes = this._element.attributes;
+        attributes = this._html$_element.attributes;
         keys = H.setRuntimeTypeInfo([], [P.String]);
         for (len = attributes.length, i = 0; i < len; ++i) {
           if (i >= attributes.length)
@@ -8115,12 +7923,12 @@
       }
     },
     _ElementAttributeMap: {
-      "^": "_AttributeMap;_element",
+      "^": "_AttributeMap;_html$_element",
       $index: function(_, key) {
-        return this._element.getAttribute(key);
+        return this._html$_element.getAttribute(key);
       },
       $indexSet: function(_, key, value) {
-        this._element.setAttribute(key, value);
+        this._html$_element.setAttribute(key, value);
       },
       get$length: function(_) {
         return this.get$keys().length;
@@ -8128,38 +7936,6 @@
       _matches$1: function(node) {
         return node.namespaceURI == null;
       }
-    },
-    _ElementCssClassSet: {
-      "^": "CssClassSetImpl;_element<",
-      readClasses$0: function() {
-        var s, t1, t2, _i, trimmed;
-        s = P.LinkedHashSet_LinkedHashSet(null, null, null, P.String);
-        for (t1 = this._element.className.split(" "), t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, H.throwConcurrentModificationError)(t1), ++_i) {
-          trimmed = J.trim$0$s(t1[_i]);
-          if (trimmed.length !== 0)
-            s.add$1(0, trimmed);
-        }
-        return s;
-      },
-      writeClasses$1: function(s) {
-        this._element.className = s.join$1(0, " ");
-      },
-      get$length: function(_) {
-        return this._element.classList.length;
-      },
-      contains$1: function(_, value) {
-        return typeof value === "string" && this._element.classList.contains(value);
-      },
-      remove$1: function(_, value) {
-        return W._ElementCssClassSet__remove(this._element, value);
-      },
-      static: {_ElementCssClassSet__remove: function(_element, value) {
-          var list, removed;
-          list = _element.classList;
-          removed = list.contains(value);
-          list.remove(value);
-          return removed;
-        }}
     },
     _EventStream: {
       "^": "Stream;_target,_eventType,_useCapture",
@@ -8199,13 +7975,13 @@
       }
     },
     _EventStreamSubscription: {
-      "^": "StreamSubscription;_pauseCount,_target,_eventType,_onData,_useCapture",
+      "^": "StreamSubscription;_pauseCount,_target,_eventType,_html$_onData,_useCapture",
       cancel$0: function() {
         if (this._target == null)
           return;
         this._unlisten$0();
         this._target = null;
-        this._onData = null;
+        this._html$_onData = null;
         return;
       },
       pause$1: function(_, resumeSignal) {
@@ -8224,12 +8000,12 @@
         this._tryResume$0();
       },
       _tryResume$0: function() {
-        var t1 = this._onData;
+        var t1 = this._html$_onData;
         if (t1 != null && this._pauseCount <= 0)
           J.addEventListener$3$x(this._target, this._eventType, t1, false);
       },
       _unlisten$0: function() {
-        var t1 = this._onData;
+        var t1 = this._html$_onData;
         if (t1 != null)
           J.removeEventListener$3$x(this._target, this._eventType, t1, false);
       }
@@ -8247,11 +8023,6 @@
         t2 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, stream._target, stream._eventType, W._wrapZone(t2), false), [H.getTypeArgumentByIndex(stream, 0)]);
         t2._tryResume$0();
         t1.$indexSet(0, stream, t2);
-      },
-      remove$1: function(_, stream) {
-        var subscription = this._subscriptions.remove$1(0, stream);
-        if (subscription != null)
-          subscription.cancel$0();
       },
       close$0: [function(_) {
         var t1, t2;
@@ -8419,7 +8190,7 @@
           return true;
         if (attributeName === "template" && value === "")
           return true;
-        if (J.get$attributes$x(element)._element.getAttribute("template") === "")
+        if (J.get$attributes$x(element)._html$_element.getAttribute("template") === "")
           return this._templateAttrs.contains$1(0, attributeName);
         return false;
       },
@@ -8519,7 +8290,7 @@
         isAttr = null;
         try {
           attrs = J.get$attributes$x(element);
-          isAttr = attrs.get$_element().getAttribute("is");
+          isAttr = attrs.get$_html$_element().getAttribute("is");
           corruptedTest1 = function(element) {
             if (!(element.attributes instanceof NamedNodeMap))
               return true;
@@ -8593,7 +8364,7 @@
           }
         t1 = attrs.get$keys();
         keys = H.setRuntimeTypeInfo(t1.slice(), [H.getTypeArgumentByIndex(t1, 0)]);
-        for (i = attrs.get$keys().length - 1, t1 = attrs._element; i >= 0; --i) {
+        for (i = attrs.get$keys().length - 1, t1 = attrs._html$_element; i >= 0; --i) {
           if (i >= keys.length)
             return H.ioore(keys, i);
           $name = keys[i];
@@ -8639,7 +8410,7 @@
   }], ["dart.dom.svg", "dart:svg",, P, {
     "^": "",
     AElement: {
-      "^": "GraphicsElement;target=",
+      "^": "GraphicsElement;",
       $isInterceptor: 1,
       "%": "SVGAElement"
     },
@@ -8769,30 +8540,8 @@
       $isInterceptor: 1,
       "%": "SVGScriptElement"
     },
-    _AttributeClassSet: {
-      "^": "CssClassSetImpl;_svg$_element",
-      readClasses$0: function() {
-        var classname, s, t1, t2, _i, trimmed;
-        classname = this._svg$_element.getAttribute("class");
-        s = P.LinkedHashSet_LinkedHashSet(null, null, null, P.String);
-        if (classname == null)
-          return s;
-        for (t1 = classname.split(" "), t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, H.throwConcurrentModificationError)(t1), ++_i) {
-          trimmed = J.trim$0$s(t1[_i]);
-          if (trimmed.length !== 0)
-            s.add$1(0, trimmed);
-        }
-        return s;
-      },
-      writeClasses$1: function(s) {
-        this._svg$_element.setAttribute("class", s.join$1(0, " "));
-      }
-    },
     SvgElement: {
       "^": "Element;",
-      get$classes: function(receiver) {
-        return new P._AttributeClassSet(receiver);
-      },
       get$children: function(receiver) {
         return new P.FilteredElementList(receiver, new W._ChildNodeListLazy(receiver));
       },
@@ -9247,52 +8996,6 @@
         return this._html_common$_captured_completer_1.completeError$1(result);
       }
     },
-    CssClassSetImpl: {
-      "^": "Object;",
-      _validateToken$1: function(value) {
-        if ($.$get$CssClassSetImpl__validTokenRE()._nativeRegExp.test(H.checkString(value)))
-          return value;
-        throw H.wrapException(P.ArgumentError$value(value, "value", "Not a valid class token"));
-      },
-      toString$0: function(_) {
-        return this.readClasses$0().join$1(0, " ");
-      },
-      get$iterator: function(_) {
-        var t1, t2;
-        t1 = this.readClasses$0();
-        t2 = new P.LinkedHashSetIterator(t1, t1._collection$_modifications, null, null);
-        t2._collection$_cell = t1._collection$_first;
-        return t2;
-      },
-      forEach$1: function(_, f) {
-        this.readClasses$0().forEach$1(0, f);
-      },
-      map$1: function(_, f) {
-        var t1 = this.readClasses$0();
-        return H.setRuntimeTypeInfo(new H.EfficientLengthMappedIterable(t1, f), [H.getTypeArgumentByIndex(t1, 0), null]);
-      },
-      get$length: function(_) {
-        return this.readClasses$0()._collection$_length;
-      },
-      contains$1: function(_, value) {
-        if (typeof value !== "string")
-          return false;
-        this._validateToken$1(value);
-        return this.readClasses$0().contains$1(0, value);
-      },
-      lookup$1: function(value) {
-        return this.contains$1(0, value) ? value : null;
-      },
-      remove$1: function(_, value) {
-        var s, result;
-        this._validateToken$1(value);
-        s = this.readClasses$0();
-        result = s.remove$1(0, value);
-        this.writeClasses$1(s);
-        return result;
-      },
-      $isEfficientLength: 1
-    },
     FilteredElementList: {
       "^": "ListBase;_node,_childNodes",
       get$_html_common$_iterable: function() {
@@ -9371,7 +9074,7 @@
         t1.display = "none";
         document.querySelector("#field").setAttribute("style", "");
         P.print("upd+enemyName");
-        N.updateTable();
+        N.updateTable(false, "");
       } else {
         t1 = document.querySelector("#field").style;
         t1.display = "none";
@@ -9439,7 +9142,7 @@
     }, "call$1", "script__logout$closure", 2, 0, 4],
     updatePlayers: [function(timer) {
       W.HttpRequest_getString("/updatePlayers", null, null).then$1(new N.updatePlayers_closure(new N.updatePlayers_setClickable()));
-    }, "call$1", "script__updatePlayers$closure", 2, 0, 22],
+    }, "call$1", "script__updatePlayers$closure", 2, 0, 21],
     openSocket: function() {
       var t1, socket, t2;
       t1 = {};
@@ -9490,8 +9193,8 @@
       J.set$innerHtml$x(document.querySelector("#field"), "");
       document.querySelector("#play").setAttribute("style", "");
     }, "call$1", "script__quit$closure", 2, 0, 4],
-    updateTable: function() {
-      W.HttpRequest_getString("/getTable", null, null).then$1(new N.updateTable_closure());
+    updateTable: function(is_end, msg) {
+      W.HttpRequest_getString("/getTable", null, null).then$1(new N.updateTable_closure(is_end, msg));
     },
     register_closure: {
       "^": "Closure:6;_captured_name_0",
@@ -9569,7 +9272,7 @@
     openSocket_closure1: {
       "^": "Closure:1;_script$_box_0",
       call$1: function($event) {
-        var t1, msg, enemy, turn, id_val, value;
+        var t1, msg, enemy, turn;
         t1 = J.getInterceptor$x($event);
         msg = t1.get$data($event);
         P.print(t1.get$data($event));
@@ -9617,56 +9320,35 @@
           turn = t1[1];
           P.print(C.JSString_methods.$add("turn=", turn));
           $.isTurn = J.$eq$(turn, "true");
-          J.set$innerHtml$x(document.querySelector("#field"), new N.openSocket__generateTable().call$1(N.readCookie("enemyName")));
-          t1 = J.get$onClick$x(document.querySelector("#quit_button"));
-          H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.script__quit$closure()), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-          P.print("very important:=" + String($.isTurn));
-          if ($.isTurn) {
-            t1 = new W._FrozenElementList(document.querySelectorAll(".active-rows"));
-            t1.forEach$1(t1, new N.openSocket__closure1(new N.openSocket__madestep(this._script$_box_0)));
-          }
-          t1 = document.querySelector("#which_turn");
-          J.set$innerHtml$x(t1, $.isTurn ? "Your turn" : "Your opposite`s turn");
+          N.updateTable(0, "");
         }
         t1 = msg.split(":");
         if (0 >= t1.length)
           return H.ioore(t1, 0);
         if (J.$eq$(t1[0], "MadeStep")) {
-          t1 = msg.split(":");
-          if (1 >= t1.length)
-            return H.ioore(t1, 1);
-          id_val = t1[1];
-          value = $.isCross ? "O" : "X";
-          P.print(value);
-          t1 = C.JSString_methods.$add("#", id_val);
-          J.set$innerHtml$x(document.querySelector(t1), value);
-          t1 = new W._FrozenElementList(document.querySelectorAll(".active-rows"));
-          t1.forEach$1(t1, new N.openSocket__closure2(this._script$_box_0));
-          t1 = C.JSString_methods.$add("#", id_val);
-          J.get$classes$x(document.querySelector(t1)).remove$1(0, "active-rows");
+          P.print($.isCross ? "O" : "X");
           $.isTurn = !$.isTurn;
-          t1 = document.querySelector("#which_turn");
-          J.set$innerHtml$x(t1, $.isTurn ? "Your Turn" : "Opposite's turn");
-          P.print($.$get$listeners().$index(0, id_val).cancel$0());
-          P.print($.$get$listeners().remove$1(0, id_val));
+          N.updateTable(0, "");
         }
         t1 = msg.split(":");
         if (0 >= t1.length)
           return H.ioore(t1, 0);
         if (J.$eq$(t1[0], "YouWon")) {
           N.displayResult(msg);
-          J.set$innerHtml$x(document.querySelector("#won_cond"), "You won!");
-          $.$get$listeners().forEach$1(0, new N.openSocket__closure3());
+          $.isTurn = false;
+          $.$get$listeners().forEach$1(0, new N.openSocket__closure1());
           $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
+          N.updateTable(2, msg);
         }
         t1 = msg.split(":");
         if (0 >= t1.length)
           return H.ioore(t1, 0);
         if (J.$eq$(t1[0], "YouLose")) {
           N.displayResult(msg);
-          J.set$innerHtml$x(document.querySelector("#won_cond"), "You lose");
-          $.$get$listeners().forEach$1(0, new N.openSocket__closure4());
+          $.isTurn = false;
+          $.$get$listeners().forEach$1(0, new N.openSocket__closure2());
           $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
+          N.updateTable(1, msg);
         }
         t1 = msg.split(":");
         if (0 >= t1.length)
@@ -9674,38 +9356,33 @@
         if (J.$eq$(t1[0], "EnemyQuit")) {
           J.set$innerHtml$x(document.querySelector("#won_cond"), "Your opponent left this game");
           P.print("Quitted");
-          $.$get$listeners().forEach$1(0, new N.openSocket__closure5());
+          $.$get$listeners().forEach$1(0, new N.openSocket__closure3());
           $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
           N.createCookie("enemyName", "", null);
           this._script$_box_0._captured_socket_0 = N.openSocket();
           P.print("new socket should be opened");
         }
-      }
-    },
-    openSocket__generateTable: {
-      "^": "Closure:21;",
-      call$1: function(enemy) {
-        var table, i, j;
-        table = C.JSString_methods.$add("<div>Your enemy:", enemy) + "</div><div id=\"which_turn\">";
-        P.print($.isTurn);
-        table = table + ($.isTurn ? "Your turn" : "Your opposite`s turn") + "</div><div id='quit_button'><a href=\"#\">Quit</a></div><div id=\"won_cond\"></div><table><tbody>";
-        for (i = 0; i < 10; ++i) {
-          table += "<tr>";
-          for (j = 0; j < 10; ++j)
-            table = table + "<td class=\"active-rows table_rows\" " + (" id=\"c" + C.JSInt_methods.toString$0(i) + "x" + C.JSInt_methods.toString$0(j) + "\" ></td>");
-          table += "</tr>";
+        t1 = msg.split(":");
+        if (0 >= t1.length)
+          return H.ioore(t1, 0);
+        if (J.$eq$(t1[0], "StepDone")) {
+          $.isTurn = !$.isTurn;
+          t1 = document.querySelector("#which_turn");
+          J.set$innerHtml$x(t1, $.isTurn ? "Your Turn" : "Opposite's turn");
+          $.$get$listeners().forEach$1(0, new N.openSocket__closure4());
+          $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
+          N.updateTable(0, "");
         }
-        return table + "</tbody></table>";
       }
     },
     openSocket__closure: {
       "^": "Closure:12;_script$_box_0,_captured_enemy_1",
       call$1: function(e) {
         var t1 = this._captured_enemy_1;
-        W.HttpRequest_postFormData("/confirm", P.LinkedHashMap__makeLiteral([t1, t1]), null, null, null, null).then$1(new N.openSocket___closure1(this._script$_box_0, t1));
+        W.HttpRequest_postFormData("/confirm", P.LinkedHashMap__makeLiteral([t1, t1]), null, null, null, null).then$1(new N.openSocket___closure(this._script$_box_0, t1));
       }
     },
-    openSocket___closure1: {
+    openSocket___closure: {
       "^": "Closure:6;_script$_box_0,_captured_enemy_2",
       call$1: function(request) {
         var t1, t2;
@@ -9724,88 +9401,16 @@
         J.set$innerHtml$x(document.querySelector("#play_dialog"), "");
       }
     },
-    openSocket__madestep: {
-      "^": "Closure:4;_script$_box_0",
-      call$1: function(e) {
-        var el, t1, t2;
-        el = H.interceptedTypeCast(J.get$target$x(e), "$isHtmlElement");
-        t1 = J.getInterceptor$x(el);
-        if ($.isCross)
-          t1.setInnerHtml$1(el, "X");
-        else
-          t1.setInnerHtml$1(el, "O");
-        W._ElementCssClassSet__remove(el, "active-rows");
-        $.isTurn = !$.isTurn;
-        t1 = document.querySelector("#which_turn");
-        J.set$innerHtml$x(t1, $.isTurn ? "Your Turn" : "Opposite's turn");
-        $.$get$listeners().forEach$1(0, new N.openSocket__madestep_closure());
-        $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
-        t1 = this._script$_box_0._captured_socket_0;
-        t2 = el.id;
-        if (t2 == null)
-          return t2.$add();
-        t1.send(t2 + ":MadeStep");
-      }
-    },
-    openSocket__madestep_closure: {
+    openSocket__closure1: {
       "^": "Closure:3;",
       call$2: function(numb, listener) {
         return listener.cancel$0();
-      }
-    },
-    openSocket__closure1: {
-      "^": "Closure:1;_captured_madestep_3",
-      call$1: function(cell) {
-        var t1, $onclick;
-        P.print(cell);
-        t1 = J.getInterceptor$x(cell);
-        $onclick = t1.get$onClick(cell);
-        $.$get$listeners().putIfAbsent$2(t1.get$id(cell), new N.openSocket___closure0(this._captured_madestep_3, $onclick));
-      }
-    },
-    openSocket___closure0: {
-      "^": "Closure:0;_captured_madestep_4,_captured_onclick_5",
-      call$0: function() {
-        return this._captured_onclick_5.listen$1(this._captured_madestep_4);
       }
     },
     openSocket__closure2: {
-      "^": "Closure:1;_script$_box_0",
-      call$1: function(row) {
-        $.$get$listeners().putIfAbsent$2(J.get$id$x(row), new N.openSocket___closure(row, new N.openSocket___drawCellInnerElement(this._script$_box_0, row)));
-      }
-    },
-    openSocket___drawCellInnerElement: {
-      "^": "Closure:4;_script$_box_0,_captured_row_6",
-      call$1: function(e) {
-        var t1, t2, t3;
-        t1 = this._captured_row_6;
-        t2 = $.isCross ? $.cross : $.zero;
-        t3 = J.getInterceptor$x(t1);
-        t3.set$innerHtml(t1, t2);
-        t3.get$classes(t1).remove$1(0, "active-rows");
-        $.isTurn = !$.isTurn;
-        t3 = document.querySelector("#which_turn");
-        J.set$innerHtml$x(t3, $.isTurn ? "Your Turn" : "Opposite's turn");
-        $.$get$listeners().forEach$1(0, new N.openSocket___drawCellInnerElement_closure());
-        $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
-        t2 = this._script$_box_0._captured_socket_0;
-        t1 = t1.id;
-        if (t1 == null)
-          return t1.$add();
-        t2.send(t1 + ":MadeStep");
-      }
-    },
-    openSocket___drawCellInnerElement_closure: {
       "^": "Closure:3;",
       call$2: function(numb, listener) {
         return listener.cancel$0();
-      }
-    },
-    openSocket___closure: {
-      "^": "Closure:0;_captured_row_7,_captured_drawCellInnerElement_8",
-      call$0: function() {
-        return J.get$onClick$x(this._captured_row_7).listen$1(this._captured_drawCellInnerElement_8);
       }
     },
     openSocket__closure3: {
@@ -9820,70 +9425,57 @@
         return listener.cancel$0();
       }
     },
-    openSocket__closure5: {
-      "^": "Closure:3;",
-      call$2: function(numb, listener) {
-        return listener.cancel$0();
-      }
-    },
     updateTable_closure: {
-      "^": "Closure:5;",
+      "^": "Closure:5;_captured_is_end_0,_captured_msg_1",
       call$1: function(resp) {
         var t1;
         document.querySelector("#field").setAttribute("style", "");
         J.set$innerHtml$x(document.querySelector("#field"), resp);
         t1 = J.get$onClick$x(document.querySelector("#quit_button"));
         H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(N.script__quit$closure()), false), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-        P.print("another dot:" + String($.isTurn));
+        P.print("His turn:" + String($.isTurn));
         if ($.isTurn) {
           t1 = new W._FrozenElementList(document.querySelectorAll(".active-rows"));
-          t1.forEach$1(t1, new N.updateTable__closure(new N.updateTable__madestep()));
+          t1.forEach$1(t1, new N.updateTable__closure());
+        }
+        t1 = this._captured_is_end_0;
+        if (t1 === 0) {
+          t1 = document.querySelector("#which_turn");
+          J.set$innerHtml$x(t1, $.isTurn ? "Your turn" : "Your opposite`s turn");
+        } else {
+          J.set$innerHtml$x(document.querySelector("#which_turn"), "Game was ended");
+          N.displayResult(this._captured_msg_1);
+          if (t1 === 2)
+            J.set$innerHtml$x(document.querySelector("#won_cond"), "You won!");
+          else
+            J.set$innerHtml$x(document.querySelector("#won_cond"), "You lose");
         }
       }
     },
-    updateTable__madestep: {
-      "^": "Closure:4;",
-      call$1: function(e) {
-        var el, t1, t2;
-        el = H.interceptedTypeCast(J.get$target$x(e), "$isHtmlElement");
-        t1 = J.getInterceptor$x(el);
-        if ($.isCross)
-          t1.setInnerHtml$1(el, "X");
-        else
-          t1.setInnerHtml$1(el, "O");
-        W._ElementCssClassSet__remove(el, "active-rows");
-        $.isTurn = !$.isTurn;
-        t1 = document.querySelector("#which_turn");
-        J.set$innerHtml$x(t1, $.isTurn ? "Your Turn" : "Opposite's turn");
-        $.$get$listeners().forEach$1(0, new N.updateTable__madestep_closure());
-        $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
-        t1 = $.socket;
-        t2 = el.id;
-        if (t2 == null)
-          return t2.$add();
-        t1.send(t2 + ":MadeStep");
+    updateTable__closure: {
+      "^": "Closure:1;",
+      call$1: function(cell) {
+        $.$get$listeners().putIfAbsent$2(J.get$id$x(cell), new N.updateTable___closure(cell, new N.updateTable___drawCellInnerElement(cell)));
       }
     },
-    updateTable__madestep_closure: {
+    updateTable___drawCellInnerElement: {
+      "^": "Closure:4;_captured_cell_2",
+      call$1: function(e) {
+        $.$get$listeners().forEach$1(0, new N.updateTable___drawCellInnerElement_closure());
+        $.listeners = H.setRuntimeTypeInfo(new H.JsLinkedHashMap(0, null, null, null, null, null, 0), [P.String, P.StreamSubscription]);
+        $.socket.send(J.$add$ns(J.get$id$x(this._captured_cell_2), ":MadeStep"));
+      }
+    },
+    updateTable___drawCellInnerElement_closure: {
       "^": "Closure:3;",
       call$2: function(numb, listener) {
         return listener.cancel$0();
       }
     },
-    updateTable__closure: {
-      "^": "Closure:1;_captured_madestep_0",
-      call$1: function(cell) {
-        var t1, $onclick;
-        P.print(cell);
-        t1 = J.getInterceptor$x(cell);
-        $onclick = t1.get$onClick(cell);
-        $.$get$listeners().putIfAbsent$2(t1.get$id(cell), new N.updateTable___closure(this._captured_madestep_0, $onclick));
-      }
-    },
     updateTable___closure: {
-      "^": "Closure:0;_captured_madestep_1,_captured_onclick_2",
+      "^": "Closure:0;_captured_cell_3,_captured_drawCellInnerElement_4",
       call$0: function() {
-        return this._captured_onclick_2.listen$1(this._captured_madestep_1);
+        return J.get$onClick$x(this._captured_cell_3).listen$1(this._captured_drawCellInnerElement_4);
       }
     }
   }, 1]];
@@ -9998,9 +9590,6 @@
   J.get$children$x = function(receiver) {
     return J.getInterceptor$x(receiver).get$children(receiver);
   };
-  J.get$classes$x = function(receiver) {
-    return J.getInterceptor$x(receiver).get$classes(receiver);
-  };
   J.get$error$x = function(receiver) {
     return J.getInterceptor$x(receiver).get$error(receiver);
   };
@@ -10033,9 +9622,6 @@
   };
   J.get$tagName$x = function(receiver) {
     return J.getInterceptor$x(receiver).get$tagName(receiver);
-  };
-  J.get$target$x = function(receiver) {
-    return J.getInterceptor$x(receiver).get$target(receiver);
   };
   J.get$wasClean$x = function(receiver) {
     return J.getInterceptor$x(receiver).get$wasClean(receiver);
@@ -10330,8 +9916,6 @@
   $.timer = null;
   $.isTurn = false;
   $.isCross = true;
-  $.cross = "X";
-  $.zero = "O";
   $ = null;
   init.isHunkLoaded = function(hunkHash) {
     return !!$dart_deferred_initializers$[hunkHash];
@@ -10419,15 +10003,13 @@
     return P.LinkedHashSet_LinkedHashSet$from(["A", "ABBR", "ACRONYM", "ADDRESS", "AREA", "ARTICLE", "ASIDE", "AUDIO", "B", "BDI", "BDO", "BIG", "BLOCKQUOTE", "BR", "BUTTON", "CANVAS", "CAPTION", "CENTER", "CITE", "CODE", "COL", "COLGROUP", "COMMAND", "DATA", "DATALIST", "DD", "DEL", "DETAILS", "DFN", "DIR", "DIV", "DL", "DT", "EM", "FIELDSET", "FIGCAPTION", "FIGURE", "FONT", "FOOTER", "FORM", "H1", "H2", "H3", "H4", "H5", "H6", "HEADER", "HGROUP", "HR", "I", "IFRAME", "IMG", "INPUT", "INS", "KBD", "LABEL", "LEGEND", "LI", "MAP", "MARK", "MENU", "METER", "NAV", "NOBR", "OL", "OPTGROUP", "OPTION", "OUTPUT", "P", "PRE", "PROGRESS", "Q", "S", "SAMP", "SECTION", "SELECT", "SMALL", "SOURCE", "SPAN", "STRIKE", "STRONG", "SUB", "SUMMARY", "SUP", "TABLE", "TBODY", "TD", "TEXTAREA", "TFOOT", "TH", "THEAD", "TIME", "TR", "TRACK", "TT", "U", "UL", "VAR", "VIDEO", "WBR"], null);
   }, "_Html5NodeValidator__attributeValidators", "$get$_Html5NodeValidator__attributeValidators", "_attributeValidators", function() {
     return P.LinkedHashMap__makeEmpty();
-  }, "CssClassSetImpl__validTokenRE", "$get$CssClassSetImpl__validTokenRE", "_validTokenRE", function() {
-    return new H.JSSyntaxRegExp("^\\S+$", H.JSSyntaxRegExp_makeNative("^\\S+$", false, true, false), null, null);
   }, "listeners", "$get$listeners", "listeners", function() {
     return H.JsLinkedHashMap_JsLinkedHashMap$es6(P.String, P.StreamSubscription);
   }]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [null];
-  init.types = [{func: 1}, {func: 1, args: [,]}, {func: 1, v: true}, {func: 1, args: [,,]}, {func: 1, v: true, args: [W.Event]}, {func: 1, args: [P.String]}, {func: 1, args: [W.HttpRequest]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, v: true, args: [,], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, ret: P.String, args: [P.$int]}, {func: 1, args: [W.MouseEvent]}, {func: 1, ret: P.bool, args: [W.Element, P.String, P.String, W._Html5NodeValidator]}, {func: 1, args: [, P.String]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, ret: P.bool}, {func: 1, args: [, P.StackTrace]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, v: true, args: [W.Node, W.Node]}, {func: 1, args: [W.CloseEvent]}, {func: 1, ret: P.String, args: [,]}, {func: 1, v: true, args: [P.Timer]}];
+  init.types = [{func: 1}, {func: 1, args: [,]}, {func: 1, v: true}, {func: 1, args: [,,]}, {func: 1, v: true, args: [W.Event]}, {func: 1, args: [P.String]}, {func: 1, args: [W.HttpRequest]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, v: true, args: [,], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, ret: P.String, args: [P.$int]}, {func: 1, args: [W.MouseEvent]}, {func: 1, ret: P.bool, args: [W.Element, P.String, P.String, W._Html5NodeValidator]}, {func: 1, args: [, P.String]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, ret: P.bool}, {func: 1, args: [, P.StackTrace]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, v: true, args: [W.Node, W.Node]}, {func: 1, args: [W.CloseEvent]}, {func: 1, v: true, args: [P.Timer]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }

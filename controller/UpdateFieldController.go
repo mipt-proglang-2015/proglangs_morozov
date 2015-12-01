@@ -40,19 +40,19 @@ func drawTable(enemy string, isTurn bool,fld_wrap *model.Field ) string {
 	}
 	result:= "<div>Your enemy:"+enemy+"</div><div id='which_turn'>"+turn_string+"</div><div id='won_cond'></div><div id='quit_button'><a href=\"#\">Quit</a></div><table><tbody>";
 
-	for i:=0;i<model.FIELD_SIZE;i++{
+	for i:=0;i<fld_wrap.Height;i++{
 		result+="<tr>"
-		for j:=0;j<model.FIELD_SIZE;j++{
+		for j:=0;j<fld_wrap.Width;j++{
 			k := strconv.Itoa(i)
 			l := strconv.Itoa(j)
 
 			if (field[i][j]<1){
-				result += "<td class='table_rows active-rows' id='"+k+"x"+l+"'></td>"
+				result += "<td class='table_rows active-rows' id='c"+k+"x"+l+"'></td>"
 			} else {
 				if (field[i][j]==1){
-					result += "<td  class='table_rows' id='"+k+"x"+l+"'>O</td>"
+					result += "<td  class='table_rows' id='c"+k+"x"+l+"'>O</td>"
 				} else{
-					result += "<td  class='table_rows' id='"+k+"x"+l+"'>X</td>"
+					result += "<td  class='table_rows' id='c"+k+"x"+l+"'>X</td>"
 				}
 			}
 

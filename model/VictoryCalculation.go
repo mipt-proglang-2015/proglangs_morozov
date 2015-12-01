@@ -34,15 +34,17 @@ func CalculatePossibleVictory(playerName string,k int,l int) (bool,*ResultQueue)
 
 
 func get1DiagResult(fld *Field,k int,l int)(bool,*ResultQueue){
+	width:=fld.Width
+	height:=fld.Height
 	x0 := int(math.Max(0,math.Max(float64(k-l),float64(k-4))))
-	x1 := int(math.Min(float64(k+5),math.Min(FIELD_SIZE,float64(k+FIELD_SIZE-l))))
+	x1 := int(math.Min(float64(k+5),math.Min(float64(height),float64(k+height-l))))
 	y0 := int(math.Max(0,math.Max(float64(l-k),float64(l-4))))
-	y1 := int(math.Min(float64(l+5),math.Min(FIELD_SIZE,float64(l+FIELD_SIZE-k))))
+	y1 := int(math.Min(float64(l+5),math.Min(float64(width),float64(l+width-k))))
 
 
 	q := &ResultQueue{0, [5]int{}, [5]int{}}
-	//fmt.Println(fld)
-	fmt.Println("init="+strconv.Itoa(x0)+" "+strconv.Itoa(x1)+" "+strconv.Itoa(k)+" "+strconv.Itoa(l))
+
+	//fmt.Println("init="+strconv.Itoa(x0)+" "+strconv.Itoa(x1)+" "+strconv.Itoa(k)+" "+strconv.Itoa(l))
 	result := fld.Field[k][l]
 	for i,j := x0,y0; i<x1 && j<y1; i,j=i+1,j+1 {
 
@@ -57,9 +59,9 @@ func get1DiagResult(fld *Field,k int,l int)(bool,*ResultQueue){
 
 
 func getVerticalResult(fld *Field,k int,l int)(bool,*ResultQueue){
-
+	height:=fld.Height;
 	x0:= int(math.Max(0,float64(k-4)))
-	x1 := int(math.Min(float64(k+5),FIELD_SIZE))
+	x1 := int(math.Min(float64(k+5),float64(height)))
 	q := &ResultQueue{0,[5]int{},[5]int{}}
 	//fmt.Println("init="+strconv.Itoa(x0)+" "+strconv.Itoa(x1)+" "+strconv.Itoa(k)+" "+strconv.Itoa(l))
 	result := fld.Field[k][l]
@@ -75,8 +77,9 @@ func getVerticalResult(fld *Field,k int,l int)(bool,*ResultQueue){
 
 
 func getLineResult(fld *Field,k int,l int)(bool,*ResultQueue) {
+	width:=fld.Width
 	y0 := int(math.Max(0, float64(l-4)))
-	y1 := int(math.Min(float64(l+5), FIELD_SIZE))
+	y1 := int(math.Min(float64(l+5), float64(width)))
 
 
 	q := &ResultQueue{0, [5]int{}, [5]int{}}
@@ -92,16 +95,18 @@ func getLineResult(fld *Field,k int,l int)(bool,*ResultQueue) {
 }
 
 func get2DiagResult(fld *Field,k int,l int)(bool,*ResultQueue){
-	x0 := int(math.Max(0,math.Max(float64(k+l+1-FIELD_SIZE),float64(k-4))))
-	x1 := int(math.Min(float64(k+5),math.Min(FIELD_SIZE,float64(l+k+1))))
-	y1 := int(math.Max(-1,math.Max(float64(l+k-FIELD_SIZE),float64(l-5))))
-	y0 := int(math.Min(float64(l+4),math.Min(FIELD_SIZE-1,float64(l+k))))
-	fmt.Println("init="+strconv.Itoa(x1)+" "+strconv.Itoa(y1)+" "+strconv.Itoa(k)+" "+strconv.Itoa(l))
+	width:=fld.Width
+	height:=fld.Height
+	x0 := int(math.Max(0,math.Max(float64(k+l+1-height),float64(k-4))))
+	x1 := int(math.Min(float64(k+5),math.Min(float64(height),float64(l+k+1))))
+	y1 := int(math.Max(-1,math.Max(float64(l+k-width),float64(l-5))))
+	y0 := int(math.Min(float64(l+4),math.Min(float64(width-1),float64(l+k))))
+	//fmt.Println("init="+strconv.Itoa(x1)+" "+strconv.Itoa(y1)+" "+strconv.Itoa(k)+" "+strconv.Itoa(l))
 	q := &ResultQueue{0, [5]int{}, [5]int{}}
 	//fmt.Println("init="+strconv.Itoa(x0)+" "+strconv.Itoa(x1)+" "+strconv.Itoa(y0)+" "+strconv.Itoa(y1))
 	result := fld.Field[k][l]
 	for i,j := x0,y0; i<x1 && j>y1; i,j=i+1,j-1 {
-		fmt.Println(strconv.Itoa(i)+" "+strconv.Itoa(j)+" "+strconv.Itoa(fld.Field[i][j])+strconv.Itoa(result),q.ToString())
+		//fmt.Println(strconv.Itoa(i)+" "+strconv.Itoa(j)+" "+strconv.Itoa(fld.Field[i][j])+strconv.Itoa(result),q.ToString())
 		res,q := getResultBase(q, fld, i, j, result)
 		if (res) {
 			return res, q

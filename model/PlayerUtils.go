@@ -3,13 +3,15 @@ import (
 	"container/list"
 	"strings"
 	"strconv"
-
 )
 
 
 var playerList = *list.New()
 const FIELD_SIZE = 10
-
+var WIDTH = FIELD_SIZE
+var HEIGHT = FIELD_SIZE
+const START =5000
+const MAX_FIELD_SIZE=10000
 
 func GetPlayerList() *list.List{
 	return &playerList
@@ -18,11 +20,61 @@ func GetPlayerList() *list.List{
 
 
 type Field struct {
-	Field [FIELD_SIZE][FIELD_SIZE]int
+	Field [][]int
+	Buffer [][] int
+	StartW int
+	StartH int
+	Width int
+	Height int
 }
 
 func CreateNewField() *Field{
-	return &Field{[FIELD_SIZE][FIELD_SIZE]int{}}
+	buffer := make([][]int,MAX_FIELD_SIZE)
+	for i := range buffer {
+		buffer[i] = make([]int,MAX_FIELD_SIZE)
+	}
+	field := buffer[START:START+FIELD_SIZE]
+	for i := range field {
+		field[i] = buffer[START+i][START:START+FIELD_SIZE];
+	}
+	return &Field{field,buffer,START,START,FIELD_SIZE,FIELD_SIZE}
+}
+
+func ResizeField(fld *Field,changeW int, changeH int) {
+	if (changeH==-1){
+
+		fld.StartH--
+		fld.Height++
+	}
+	if (changeH==+1){
+		fld.Height++
+	}
+	if (changeW==-1){
+		fld.StartW--
+		fld.Width++
+	}
+	if (changeW==+1){
+		fld.Width++
+	}
+
+	fld.Field = fld.Buffer[fld.StartH:fld.StartH+fld.Height]
+	for i := range fld.Field {
+
+
+		buffer := make([]int,MAX_FIELD_SIZE)
+		for j:=0;j<WIDTH;j++{
+			add:=0
+			if (changeW==-1) {
+				add=1
+			}
+			buffer[fld.StartW+j+add]=fld.Buffer[i+fld.StartH][j]
+		}
+
+		fld.Field[i]=buffer[fld.StartW:fld.StartW+fld.Width]
+
+
+
+	}
 }
 
 func ListToArr(playerList *list.List) []Player{
