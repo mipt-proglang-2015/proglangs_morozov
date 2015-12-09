@@ -1,0 +1,4 @@
+name: crosszeros
+dependencies:
+  js: ^0.6.0
+  browser: "^0.10.0+2"
