@@ -18,7 +18,6 @@ void main() {
 
   getClientName();
 	getEnemyName();
-	print(readCookie("clientName"));
   
 }
 
@@ -27,16 +26,12 @@ void register(Event e){
   e.preventDefault();
   FormElement form = e.target as FormElement;
   String url = form.attributes['action'];
-  print(url);
   String name = (form.querySelector('input#clientNameField') as InputElement).value;
   
   var data = { 'name' : name };
-  print(url);
-	print(url);
   HttpRequest.postFormData(url, data).then((HttpRequest request) {
     
     createCookie('clientName',name,1);
-    print(name);
 		getClientName();
 
 		socket = openSocket();
@@ -83,7 +78,6 @@ void eraseCookie(String name) {
 			querySelector("#login_name").innerHtml = clName;
 			querySelector("#logout").setAttribute("style","");
 			timer = new Timer.periodic(const Duration(seconds: 2), 								updatePlayers);
-			print(timer.isActive);
       socket=openSocket();
     }
 		else{
@@ -96,32 +90,26 @@ void eraseCookie(String name) {
 
 	void getEnemyName(){
 		String enemyName =readCookie("enemyName");
-		print(readCookie("gjName"));
-		print(enemyName);
+
 		if (enemyName!=null && enemyName!="" ){
 			querySelector("#play").style.display="none";
 			querySelector("#field").setAttribute("style","");
-			print('upd+enemyName');
-			updateTable(false,"");
+			updateTable(0,"");
 		}
 		else{
 			querySelector("#field").style.display="none";
 			querySelector("#play").setAttribute("style","");
-			print('no null');
 		}
 	}
 
 	void logout(Event event){
 		event.preventDefault();
-    AnchorElement el = event.target as AnchorElement;	
-		print(el.innerHtml);
+    AnchorElement el = event.target as AnchorElement;
     String url = el.getAttribute('href');
 		
   	HttpRequest.getString(url).then((String resp) {
   		getClientName();
-      print(url);
       timer.cancel();
-			print(url);
       socket.close();
 	});
   }
@@ -174,7 +162,6 @@ WebSocket openSocket(){
 		print(event.data);
 		String generateTable (enemy){
 			String table = "<div>Your enemy:"+enemy+"</div><div id=\"which_turn\">";
-			print(isTurn);
 			String which_turn = (isTurn)? "Your turn":"Your opposite`s turn";
 			table += which_turn;
 			table += "</div><div id='quit_button'><a href=\"#\">Quit</a></div><div id=\"won_cond\"></div><table><tbody>";
@@ -236,58 +223,11 @@ WebSocket openSocket(){
 			print("turn="+turn);
 			isTurn = (turn == 'true');
 				updateTable(0,"");
-				/*	querySelector("#field").innerHtml=generateTable(readCookie('enemyName'));
-      querySelector("#quit_button").onClick.listen(quit);
-      void madestep (Event e){
-					HtmlElement el = (e.target as HtmlElement);
-          socket.send(el.id+":MadeStep");
-
-				}
-			print("very important:="+isTurn.toString());
-			if (isTurn){
-
-				querySelectorAll(".active-rows").forEach((cell){
-				print(cell);
-				ElementStream onclick = cell.onClick;
-        listeners.putIfAbsent(cell.id,()=>onclick.listen(madestep));
-      }
-        );
-      }
-			querySelector("#which_turn").innerHtml=(isTurn)? "Your turn":"Your opposite`s turn";*/
 
 		}
 		if (msg.split(":")[0]=="MadeStep"){
-
-			//var id_val = msg.split(":")[1];
 			var value = (isCross)?"O":"X";
-			print(value);
-			/*querySelector("#"+id_val).innerHtml = value;
 
-			querySelectorAll('.active-rows').forEach((row){
-        void drawCellInnerElement(Event e){
-          row.innerHtml=(isCross)?cross:zero;
-          row.classes.remove("active-rows");
-          isTurn=!isTurn;
-          querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
-					listeners.forEach((numb,listener)=>listener.cancel());
-					listeners = new Map<String,StreamSubscription>();
-
-
-					socket.send(row.id+":MadeStep");
-        }
-      listeners.putIfAbsent(row.id,()=>row.onClick.listen(drawCellInnerElement));
-      
-      }
-      );
-      
-          querySelector("#"+id_val).classes.remove("active-rows");
-         isTurn=!isTurn;
-          querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
-
-					var listener = listeners[id_val];
-					print(listener.cancel());
-					print(listeners.remove(id_val));
-*/
 			isTurn=!isTurn;
 			updateTable(0,"");
 		}
@@ -313,13 +253,11 @@ WebSocket openSocket(){
 
 		if(msg.split(":")[0]=="EnemyQuit"){
 			querySelector("#won_cond").innerHtml="Your opponent left this game";
-			print('Quitted');
 			listeners.forEach((numb,listener)=>listener.cancel());
       listeners = new Map<String,StreamSubscription>();
 			eraseCookie('enemyName');
 
 			socket=openSocket();
-			print('new socket should be opened');
 		}
 		if(msg.split(":")[0]=="StepDone"){
 
@@ -351,7 +289,6 @@ void quit(Event e){
 	if (enemyName!=null && enemyName!="") {
 
 		eraseCookie('enemyName');
-		print(readCookie('enemyName'));
 		socket.send(enemyName + ":QuitGame");
 
 		socket = openSocket();
@@ -375,14 +312,8 @@ void updateTable(int is_end,String msg){
       querySelectorAll(".active-rows").forEach((cell){
 
 				void drawCellInnerElement(Event e){
-					//cell.innerHtml=(isCross)?cross:zero;
-					//cell.classes.remove("active-rows");
-					//isTurn=!isTurn;
-					//querySelector("#which_turn").innerHtml=(isTurn)?"Your Turn": "Opposite's turn";
 					listeners.forEach((numb,listener)=>listener.cancel());
 					listeners = new Map<String,StreamSubscription>();
-
-
 					socket.send(cell.id+":MadeStep");
 				}
 				listeners.putIfAbsent(cell.id,()=>cell.onClick.listen(drawCellInnerElement));

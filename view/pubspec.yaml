@@ -1,0 +1,12 @@
+name: crosszeros
+dependencies:
+  browser: "^0.10.0+2"
+
+transformers:
+- $dart2js:
+    minify: true
+    commandLineOptions:
+    - --trust-type-annotations
+    - --trust-primitives
+    - --out=script.dart.js
+

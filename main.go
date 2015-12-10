@@ -12,7 +12,7 @@ import (
 )
 
 
-const STATIC_DIR = "./view/static"
+const STATIC_DIR = "./view/build/web"
 const PORT = ":8090"
 const HTTPS_PORT=":10443"
 

@@ -73,25 +73,6 @@
 			</form>
 		</div>
 
-		<script type="text/javascript">
-		$(document).ready(function(){
-		 $(".players_free").each(function(i){
-			$(this).click(function(){
-				var clName  =  $.cookie("clientName");
-				var content = $(this).find("a").html();
-				console.log(content)
-				socket.send(content+"%"+clName+":clientToApprove")
-
-			})
-
-
-		 })
-
-
-
-		})
-
-		</script>
 		<div id="play">
 			<h2>Players online</h2>
 			<div id="active_players"></div>

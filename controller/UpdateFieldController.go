@@ -5,20 +5,6 @@ import (
 	"github.com/mls93/crosszeros/model"
 )
 
-const CELL_ONCLICK = `
-	if (isCross)
-		$(this).html(cross);
-	else $(this).html(zero);
-	$(this).removeClass(act_rows);
-	$(act_rows).removeAttr(onclick_str);
-	isTurn = !isTurn;
-	$(turn_div).html((isTurn)? your_turn:opposite_turn);
-	socket.send($(this)[0].id+madestepName);
-`
-
-
-
-
 
 func GetTableHandler(w http.ResponseWriter, r *http.Request){
 

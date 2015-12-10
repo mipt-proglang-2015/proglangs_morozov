@@ -6,7 +6,7 @@ import (
 
 )
 
-const PLAYERS_TEMPLATE = "view/playerlist.tpl"
+const PLAYERS_TEMPLATE = "view/build/web/playerlist.tpl"
 
 func ClientHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "https://dartpad.dartlang.org")
