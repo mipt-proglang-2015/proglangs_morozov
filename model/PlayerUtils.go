@@ -7,7 +7,7 @@ import (
 
 
 var playerList = *list.New()
-const FIELD_SIZE = 10
+const FIELD_SIZE = 100
 var WIDTH = FIELD_SIZE
 var HEIGHT = FIELD_SIZE
 const START =5000
